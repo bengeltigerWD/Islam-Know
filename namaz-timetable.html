@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>নামাজের সময়সূচি</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom, #f0f8ff, #e0f7fa);
+            color: #333;
+        }
+        header {
+            background: #004d40;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            font-size: 1.8em;
+        }
+        .container {
+            max-width: 600px;
+            margin: 30px auto;
+            padding: 20px;
+            background: white;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        .container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #004d40;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+        .buttons {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .buttons a {
+            display: inline-block;
+            margin: 10px;
+            padding: 10px 20px;
+            background: #00796b;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+        .buttons a:hover {
+            background: #004d40;
+        }
+        .namaz-times {
+            margin-top: 20px;
+        }
+        .namaz-times h3 {
+            text-align: center;
+            margin-bottom: 10px;
+            color: #00796b;
+        }
+        .namaz-times ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        .namaz-times ul li {
+            padding: 10px;
+            background: #e0f7fa;
+            margin-bottom: 5px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            text-align: center;
+        }
+        footer {
+            background: #004d40;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            margin-top: 20px;
+            font-size: 0.9em;
+        }
+        footer a {
+            color: #ffcc00;
+            text-decoration: none;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        নামাজের সময়সূচি
+    </header>
+
+    <div class="container">
+        <div class="buttons">
+            <a href="javascript:history.back()">Back</a>
+            <a href="index.html">Home</a>
+        </div>
+
+        <h2>আপনার এলাকা নির্বাচন করুন</h2>
+        <div class="form-group">
+            <label for="location">এলাকা নির্বাচন করুন:</label>
+            <select id="location" onchange="showNamazTimes()">
+                <option value="">-- এলাকা নির্বাচন করুন --</option>
+                <option value="dhaka">ঢাকা</option>
+                <option value="chattogram">চট্টগ্রাম</option>
+                <option value="khulna">খুলনা</option>
+                <option value="rajshahi">রাজশাহী</option>
+                <option value="sylhet">সিলেট</option>
+            </select>
+        </div>
+
+        <div class="namaz-times" id="namaz-times" style="display: none;">
+            <h3 id="location-name"></h3>
+            <ul id="namaz-list"></ul>
+        </div>
+    </div>
+
+    <footer>
+        © ২০২৪ ইসলামিক সাইট | 
+        <a href="https://github.com/bengeltigerWD/Bengal-Tiger-Website-Development-LTD/" target="_blank">
+            Bengal Tiger Web Development
+        </a>
+    </footer>
+
+    <script>
+        const namazData = {
+            dhaka: {
+                name: "ঢাকা",
+                times: {
+                    ফজর: "৫:০০ AM",
+                    জোহর: "১২:৩০ PM",
+                    আসর: "৪:১৫ PM",
+                    মাগরিব: "৬:২০ PM",
+                    এশা: "৮:০০ PM"
+                }
+            },
+            chattogram: {
+                name: "চট্টগ্রাম",
+                times: {
+                    ফজর: "৪:৫৫ AM",
+                    জোহর: "১২:২৫ PM",
+                    আসর: "৪:১০ PM",
+                    মাগরিব: "৬:১৫ PM",
+                    এশা: "৭:৫০ PM"
+                }
+            },
+            khulna: {
+                name: "খুলনা",
+                times: {
+                    ফজর: "৫:১০ AM",
+                    জোহর: "১২:৪৫ PM",
+                    আসর: "৪:২০ PM",
+                    মাগরিব: "৬:২৫ PM",
+                    এশা: "৮:১০ PM"
+                }
+            },
+            rajshahi: {
+                name: "রাজশাহী",
+                times: {
+                    ফজর: "৫:০৫ AM",
+                    জোহর: "১২:৩৫ PM",
+                    আসর: "৪:১৮ PM",
+                    মাগরিব: "৬:২২ PM",
+                    এশা: "৮:০৫ PM"
+                }
+            },
+            sylhet: {
+                name: "সিলেট",
+                times: {
+                    ফজর: "৪:৫০ AM",
+                    জোহর: "১২:২০ PM",
+                    আসর: "৪:০৫ PM",
+                    মাগরিব: "৬:১০ PM",
+                    এশা: "৭:৪৫ PM"
+                }
+            }
+        };
+
+        function showNamazTimes() {
+            const location = document.getElementById("location").value;
+            const namazSection = document.getElementById("namaz-times");
+            const locationName = document.getElementById("location-name");
+            const namazList = document.getElementById("namaz-list");
+
+            if (location) {
+                const data = namazData[location];
+                locationName.textContent = data.name + " এর নামাজের সময়সূচি";
+                namazList.innerHTML = "";
+
+                for (const [key, value] of Object.entries(data.times)) {
+                    const li = document.createElement("li");
+                    li.textContent = `${key}: ${value}`;
+                    namazList.appendChild(li);
+                }
+
+                namazSection.style.display = "block";
+            } else {
+                namazSection.style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>
