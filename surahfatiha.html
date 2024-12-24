@@ -65,6 +65,22 @@
         footer a:hover {
             text-decoration: underline;
         }
+   .responsive-iframe-container {
+        position: relative;
+        width: 100%;
+        padding-bottom: 56.25%; /* 16:9 রেশিও */
+        height: 0;
+        overflow: hidden;
+    }
+
+    .responsive-iframe-container iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: 0;
+    }
     </style>
 </head>
 <body>
@@ -116,12 +132,13 @@
 <p style="color: red; font-size: 1.2em; font-weight: bold; text-align: center; background: #ffe6e6; padding: 10px; border: 2px solid #ff0000; border-radius: 5px;">
     সুরা তে আরবী, আরবী উচ্চারণ ও বাংলা অর্থ তে আমাদের অনইচ্ছাকৃত ভুল হতে পারে, হলে আমাদের জানাবেন ইনশাআল্লাহ্‌ আমরা ঠিক করে দিবো।
 </p>
-        <!-- ইউটিউব ভিডিও এম্বেড -->
-        <div>
-            <h3>শেখার ভিডিও</h3>
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/h4bb_vqYN1M?si=UvPl8rJGiXlRqyFM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        </div>
+  <div>
+    <h3>শেখার ভিডিও</h3>
+    <div class="responsive-iframe-container">
+        <iframe src="https://www.youtube.com/embed/9FGSmn-tATQ?si=yov6tlfZQCGi65Oh" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </div>
+</div>
+
 
     <footer>
         © ২০২৪ ইসলামিক সাইট | 
