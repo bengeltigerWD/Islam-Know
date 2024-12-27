@@ -43,19 +43,34 @@
             background: #2e7d32;
         }
 
-        .search-box {
-            width: 80%;
-            max-width: 400px;
-            margin: 20px auto;
-            padding: 10px;
-            font-size: 1.2em;
-            border-radius: 5px;
-            border: 2px solid #00796b;
-            outline: none;
+        .search-container {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
         }
 
-        .search-box:focus {
-            border-color: #388e3c;
+        .search-container input[type="text"] {
+            padding: 10px;
+            font-size: 1.2em;
+            border: 1px solid #00796b;
+            border-radius: 5px;
+            width: 80%;
+            max-width: 400px;
+        }
+
+        .search-container button {
+            padding: 10px 20px;
+            font-size: 1.2em;
+            background-color: #00796b;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        .search-container button:hover {
+            background-color: #388e3c;
         }
 
         .container {
@@ -130,10 +145,13 @@
         <a href="dua.html">দুআ সমূহ</a>
     </div>
 
-    <!-- Search Box -->
-    <input type="text" class="search-box" id="search" placeholder="সুরা খোঁজ করুন..." onkeyup="searchSurah()">
+    <!-- সার্চ বক্স -->
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="সূরা খুঁজুন...">
+        <button onclick="searchSurah()">সার্চ</button>
+    </div>
 
-    <div class="container" id="surah-container">
+    <div class="container">
         <!-- সূরা ফাতিহা -->
         <div class="card">
             <h3>সূরা ফাতিহা</h3>
@@ -252,12 +270,12 @@
 
     <script>
         function searchSurah() {
-            var input = document.getElementById('search').value.toLowerCase();
+            var input = document.getElementById('searchInput').value.toLowerCase();
             var cards = document.querySelectorAll('.card');
-
+            
             cards.forEach(function(card) {
-                var title = card.querySelector('h3').textContent.toLowerCase();
-                if (title.indexOf(input) > -1) {
+                var surahTitle = card.querySelector('h3').textContent.toLowerCase();
+                if (surahTitle.includes(input)) {
                     card.style.display = 'block';
                 } else {
                     card.style.display = 'none';
