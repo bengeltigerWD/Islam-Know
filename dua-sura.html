@@ -43,6 +43,21 @@
             background: #2e7d32;
         }
 
+        .search-box {
+            width: 80%;
+            max-width: 400px;
+            margin: 20px auto;
+            padding: 10px;
+            font-size: 1.2em;
+            border-radius: 5px;
+            border: 2px solid #00796b;
+            outline: none;
+        }
+
+        .search-box:focus {
+            border-color: #388e3c;
+        }
+
         .container {
             display: flex;
             flex-wrap: wrap;
@@ -115,7 +130,10 @@
         <a href="dua.html">দুআ সমূহ</a>
     </div>
 
-    <div class="container">
+    <!-- Search Box -->
+    <input type="text" class="search-box" id="search" placeholder="সুরা খোঁজ করুন..." onkeyup="searchSurah()">
+
+    <div class="container" id="surah-container">
         <!-- সূরা ফাতিহা -->
         <div class="card">
             <h3>সূরা ফাতিহা</h3>
@@ -231,5 +249,21 @@
             Bengal Tiger Web Development
         </a>
     </footer>
+
+    <script>
+        function searchSurah() {
+            var input = document.getElementById('search').value.toLowerCase();
+            var cards = document.querySelectorAll('.card');
+
+            cards.forEach(function(card) {
+                var title = card.querySelector('h3').textContent.toLowerCase();
+                if (title.indexOf(input) > -1) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+    </script>
 </body>
 </html>
