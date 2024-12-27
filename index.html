@@ -48,6 +48,21 @@
         nav a:hover {
             background: #004d40;
         }
+
+        .search-box {
+            text-align: center;
+            margin: 20px;
+        }
+
+        .search-box input {
+            padding: 10px;
+            width: 80%;
+            max-width: 400px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 1em;
+        }
+
         .container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -55,6 +70,7 @@
             margin: 20px;
             padding: 10px;
         }
+
         .card {
             background: white;
             border: 1px solid #ddd;
@@ -62,21 +78,29 @@
             overflow: hidden;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
+
         .card:hover {
             transform: scale(1.05);
             box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
         }
+
         .card img {
             width: 100%;
             height: 160px;
             object-fit: cover;
         }
+
         .card h2 {
             font-size: 1.4em;
-            margin: 15px 0;
+            margin: 15px;
             color: #004d40;
+            flex-grow: 0;
         }
+
         .card a {
             display: block;
             padding: 12px;
@@ -85,10 +109,13 @@
             text-decoration: none;
             border-radius: 0 0 15px 15px;
             font-weight: bold;
+            margin-top: auto;
         }
+
         .card a:hover {
             background: #00796b;
         }
+
         footer {
             background: #004d40;
             color: white;
@@ -96,29 +123,14 @@
             padding: 10px 0;
             font-size: 0.9em;
         }
+
         footer a {
             color: #ffcc00;
             text-decoration: none;
         }
+
         footer a:hover {
             text-decoration: underline;
-        }
-
-        .responsive-iframe-container {
-            position: relative;
-            width: 100%;
-            padding-bottom: 56.25%; /* 16:9 রেশিও */
-            height: 0;
-            overflow: hidden;
-        }
-
-        .responsive-iframe-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: 0;
         }
 
         /* Media Queries for Responsiveness */
@@ -156,7 +168,12 @@
         <a href="contact.html">Contact</a>
     </nav>
 
-    <div class="container">
+    <!-- Search Box -->
+    <div class="search-box">
+        <input type="text" id="search" placeholder="কীওয়ার্ড দিয়ে সার্চ করুন..." onkeyup="filterCards()">
+    </div>
+
+    <div class="container" id="card-container">
         <div class="card">
             <img src="namazersomoy.jpeg" alt="নামাজের সময়সূচি">
             <h2>নামাজের সময়সূচি</h2>
@@ -195,5 +212,21 @@
             Bengal Tiger Web Development
         </a>
     </footer>
+
+    <script>
+        function filterCards() {
+            let input = document.getElementById('search').value.toLowerCase();
+            let cards = document.querySelectorAll('.card');
+            
+            cards.forEach(card => {
+                let title = card.querySelector('h2').innerText.toLowerCase();
+                if (title.includes(input)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+    </script>
 </body>
 </html>
