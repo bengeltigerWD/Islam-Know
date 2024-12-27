@@ -48,6 +48,18 @@
         nav a:hover {
             background: #004d40;
         }
+        .search-box {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .search-box input {
+            padding: 10px;
+            width: 80%;
+            max-width: 400px;
+            font-size: 1em;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
         .container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -103,26 +115,23 @@
         footer a:hover {
             text-decoration: underline;
         }
+        .responsive-iframe-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* 16:9 রেশিও */
+            height: 0;
+            overflow: hidden;
+        }
 
-    .responsive-iframe-container {
-        position: relative;
-        width: 100%;
-        padding-bottom: 56.25%; /* 16:9 রেশিও */
-        height: 0;
-        overflow: hidden;
-    }
+        .responsive-iframe-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
 
-    .responsive-iframe-container iframe {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        border: 0;
-    }
-
-
-    </style>
         @media (max-width: 768px) {
             header h1 {
                 font-size: 1.5em;
@@ -136,6 +145,9 @@
             }
             .card h2 {
                 font-size: 1.2em;
+            }
+            .container {
+                grid-template-columns: repeat(3, 1fr); /* ৩টি কার্ড প্রতি লাইন */
             }
         }
     </style>
@@ -152,27 +164,32 @@
         <a href="contact.html">Contact</a>
     </nav>
 
-    <div class="container">
+    <!-- Search Box -->
+    <div class="search-box">
+        <input type="text" id="search" placeholder="খুঁজুন..." onkeyup="searchCards()">
+    </div>
+
+    <div class="container" id="card-container">
         <div class="card">
             <img src="images/namaz-time.jpg" alt="নামাজের সময়সূচি">
             <h2>নামাজের সময়সূচি</h2>
             <a href="namaz-timetable.html">দেখুন</a>
         </div>
         <div class="card">
-            <img src="images/dua-sura.jpg" alt=" সূরা">
+            <img src="images/dua-sura.jpg" alt="সূরা">
             <h2>ছোটো সূরাসমূহ</h2>
             <a href="dua-sura.html">দেখুন</a>
         </div>
-          <div class="card">
-            <img src="images/question-answer.jpg" alt="দোয়া ">
-            <h2>  নামাজের ভেতরে ও বাইরের দুআ </h2>
+        <div class="card">
+            <img src="images/question-answer.jpg" alt="দোয়া">
+            <h2>নামাজের ভেতরে ও বাইরের দুআ</h2>
             <a href="namazdua.html">দেখুন</a>
-        </div> <div class="card">
+        </div>
+        <div class="card">
             <img src="images/namaz-guide.jpg" alt="নামাজ শেখা">
             <h2>নামাজ শেখার গাইড</h2>
             <a href="namaz-guide.html">দেখুন</a>
         </div>
-      
         <div class="card">
             <img src="images/question-answer.jpg" alt="প্রশ্ন-উত্তর">
             <h2>প্রশ্ন-উত্তর</h2>
@@ -191,5 +208,21 @@
             Bengal Tiger Web Development
         </a>
     </footer>
+
+    <script>
+        function searchCards() {
+            let searchInput = document.getElementById('search').value.toLowerCase();
+            let cards = document.querySelectorAll('.card');
+            
+            cards.forEach(card => {
+                let cardTitle = card.querySelector('h2').textContent.toLowerCase();
+                if (cardTitle.includes(searchInput)) {
+                    card.style.display = '';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+    </script>
 </body>
 </html>
