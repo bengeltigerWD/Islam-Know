@@ -48,18 +48,6 @@
         nav a:hover {
             background: #004d40;
         }
-        .search-box {
-            text-align: center;
-            margin: 20px 0;
-        }
-        .search-box input {
-            padding: 10px;
-            width: 80%;
-            max-width: 400px;
-            font-size: 1em;
-            border-radius: 5px;
-            border: 1px solid #ddd;
-        }
         .container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -115,6 +103,7 @@
         footer a:hover {
             text-decoration: underline;
         }
+
         .responsive-iframe-container {
             position: relative;
             width: 100%;
@@ -132,6 +121,7 @@
             border: 0;
         }
 
+        /* Media Queries for Responsiveness */
         @media (max-width: 768px) {
             header h1 {
                 font-size: 1.5em;
@@ -146,8 +136,10 @@
             .card h2 {
                 font-size: 1.2em;
             }
+
             .container {
-                grid-template-columns: repeat(3, 1fr); /* ৩টি কার্ড প্রতি লাইন */
+                display: grid;
+                grid-template-columns: repeat(2, 1fr); /* 2 cards per line */
             }
         }
     </style>
@@ -164,12 +156,7 @@
         <a href="contact.html">Contact</a>
     </nav>
 
-    <!-- Search Box -->
-    <div class="search-box">
-        <input type="text" id="search" placeholder="খুঁজুন..." onkeyup="searchCards()">
-    </div>
-
-    <div class="container" id="card-container">
+    <div class="container">
         <div class="card">
             <img src="images/namaz-time.jpg" alt="নামাজের সময়সূচি">
             <h2>নামাজের সময়সূচি</h2>
@@ -203,26 +190,10 @@
     </div>
 
     <footer>
-        © ২০২৪ ইসলামিক সাইট | 
+        © ২০২৪ ইসলামিক সাইট |
         <a href="https://bengeltigerwd.github.io/Bengal-Tiger-Website-Development-LTD/index.html" target="_blank">
             Bengal Tiger Web Development
         </a>
     </footer>
-
-    <script>
-        function searchCards() {
-            let searchInput = document.getElementById('search').value.toLowerCase();
-            let cards = document.querySelectorAll('.card');
-            
-            cards.forEach(card => {
-                let cardTitle = card.querySelector('h2').textContent.toLowerCase();
-                if (cardTitle.includes(searchInput)) {
-                    card.style.display = '';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-        }
-    </script>
 </body>
 </html>
