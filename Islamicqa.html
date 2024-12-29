@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ইসলামিক প্রশ্নোত্তর</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom, #f0f4f8, #e6f7f2);
+            color: #333;
+        }
+        header {
+            background: #004d40;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            font-size: 1.8em;
+        }
+        .btn-container {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            background: #00796b;
+        }
+        .btn-container a {
+            text-decoration: none;
+            color: white;
+            background: #388e3c;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-size: 1em;
+            font-weight: bold;
+        }
+        .btn-container a:hover {
+            background: #2e7d32;
+        }
+        .content {
+            padding: 20px;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        .question strong {
+            color: #004d40;
+        }
+        .ask-question {
+            text-align: center;
+            margin-top: 30px;
+        }
+        .ask-question button {
+            background: #004d40;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .ask-question button:hover {
+            background: #388e3c;
+        }
+        #like-note {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 1em;
+            color: #004d40;
+        }
+        footer {
+            background: #004d40;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            font-size: 0.9em;
+        }
+        footer a {
+            color: #ffcc00;
+            text-decoration: none;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+        .search-section {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .search-section input[type="text"] {
+            width: 60%;
+            padding: 10px;
+            font-size: 1em;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .search-section button {
+            background: #004d40;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-left: 10px;
+        }
+        .search-section button:hover {
+            background: #388e3c;
+        }
+        .top-section {
+            text-align: center;
+            margin-top: 20px;
+        }
+        @media (max-width: 768px) {
+            .search-section input[type="text"] {
+                width: 80%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        ইসলামিক প্রশ্নোত্তর
+    </header>
+
+    <div class="btn-container">
+        <a href="javascript:history.back()">Back</a>
+        <a href="index.html">Home</a>
+    </div>
+
+    <div class="top-section">
+        <div class="search-section">
+            <input type="text" placeholder="আপনার প্রশ্ন লিখুন...">
+            <button>Search</button>
+        </div>
+
+        <div class="ask-question">
+            <button onclick="openQuestionForm()">প্রশ্ন করুন</button>
+        </div>
+    </div>
+
+    <div class="content">
+        <div id="like-note">
+            আপনার প্রশ্ন আমাদের কাছে অত্যন্ত গুরুত্বপূর্ণ। আপনি প্রশ্ন করলে এটি এই পৃষ্ঠায় যোগ করা হবে।
+        </div>
+
+        <div class="question">
+            <strong>প্রশ্ন ১:</strong> নামাজ কেন গুরুত্বপূর্ণ?
+            <p>উত্তর: নামাজ মুসলিম জীবনের একটি মূল ভিত্তি। এটি আল্লাহর সঙ্গে সংযোগ স্থাপন এবং আত্মিক শান্তি লাভের উপায়।</p>
+        </div>
+        <div class="question">
+            <strong>প্রশ্ন ২:</strong> রোজা রাখা কেন জরুরি?
+            <p>উত্তর: রোজা মুসলমানদের জন্য একটি বাধ্যতামূলক ইবাদত যা আমাদের ধৈর্য ও আত্মসংযম শেখায়।</p>
+        </div>
+        <div class="question">
+            <strong>প্রশ্ন ৩:</strong> জাকাতের গুরুত্ব কী?
+            <p>উত্তর: জাকাত হলো সম্পদের পরিশুদ্ধি এবং দরিদ্রদের সহায়তা করার একটি উপায়।</p>
+        </div>
+        <div class="question">
+            <strong>প্রশ্ন ৪:</strong> হজের উদ্দেশ্য কী?
+            <p>উত্তর: হজ হলো ইসলামের একটি স্তম্ভ যা মুসলমানদের ঐক্য ও আল্লাহর প্রতি তাদের আনুগত্য প্রকাশ করে।</p>
+        </div>
+
+        <div id="question-form" style="display: none; text-align: center; margin-top: 20px;">
+            <form action="mailto:ajmirahemed75@gmail.com" method="post" enctype="text/plain">
+                <label for="name">নাম:</label><br>
+                <input type="text" id="name" name="name" required><br><br>
+                <label for="email">ইমেইল:</label><br>
+                <input type="email" id="email" name="email" required><br><br>
+                <label for="question">আপনার প্রশ্ন:</label><br>
+                <textarea id="question" name="question" rows="4" required></textarea><br><br>
+                <button type="submit">জমা দিন</button>
+            </form>
+        </div>
+
+        <script>
+            function openQuestionForm() {
+                document.getElementById('question-form').style.display = 'block';
+            }
+        </script>
+    </div>
+
+    <footer>
+        © ২০২৪ ইসলামিক সাইট | 
+        <a href=" https://bengeltigerwd.github.io/AL-HIDAYA-WEB-STUDIO-BD/" target="_blank">
+          AL-HIDAYA WEB STUDIO BANGLADESH
+        </a>
+    </footer>
+</body>
+</html>
