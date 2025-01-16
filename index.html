@@ -84,14 +84,15 @@
         }
 
         .card:hover {
-            transform: scale(1.05);
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+            transform: scale(1.1); /* হোভার করলে বড় হয়ে দেখাবে */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); /* হোভার শেডো উন্নত */
         }
 
         .card img {
             width: 100%;
             height: 160px;
-            object-fit: cover;
+            object-fit: cover; /* ফটোগুলো কেটে দেখাবে */
+            border-radius: 15px 15px 0 0; /* কার্ডের উপরের কোণ নরম করা */
         }
 
         .card h2 {
@@ -150,7 +151,6 @@
             }
 
             .container {
-                display: grid;
                 grid-template-columns: repeat(2, 1fr); /* 2 cards per line */
             }
         }
@@ -201,15 +201,15 @@
         </div>
         <div class="card">
             <img src="natificaton.jpeg" alt="নোটিফিকেশন">
-            <h2>নামাজের আ্যলারর্ম </h2>
+            <h2>নামাজের আ্যলার্ম</h2>
             <a href="alarm.html">দেখুন</a>
         </div>
     </div>
 
-     <footer>
+    <footer>
         © ২০২৪ ইসলামিক সাইট | 
-        <a href=" https://bengeltigerwd.github.io/AL-HIDAYA-WEB-STUDIO-BD/" target="_blank">
-          AL-HIDAYA WEB STUDIO BANGLADESH
+        <a href="https://bengeltigerwd.github.io/AL-HIDAYA-WEB-STUDIO-BD/" target="_blank">
+            AL-HIDAYA WEB STUDIO BANGLADESH
         </a>
     </footer>
 
