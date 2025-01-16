@@ -88,34 +88,48 @@
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); /* হোভার শেডো উন্নত */
         }
 
-        .card img {
-            width: 100%;
-            height: 160px;
-            object-fit: cover; /* ফটোগুলো কেটে দেখাবে */
-            border-radius: 15px 15px 0 0; /* কার্ডের উপরের কোণ নরম করা */
-        }
+      .card img {
+        width: 100%; /* সম্পূর্ণ প্রস্থ জুড়ে থাকবে */
+        height: 100%; /* সম্পূর্ণ উচ্চতা জুড়ে থাকবে */
+        object-fit: cover; /* ছবির আকৃতি বক্সে সুন্দরভাবে মানিয়ে যাবে */
+        border-radius: 15px 15px 0 0; /* কার্ডের উপরের কোণ নরম করা */
+    }
 
-        .card h2 {
-            font-size: 1.4em;
-            margin: 15px;
-            color: #004d40;
-            flex-grow: 0;
-        }
+    .card {
+        height: 300px; /* নির্ধারিত উচ্চতা */
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        border-radius: 15px;
+        overflow: hidden; /* বক্সের বাইরে কিছু দেখাবে না */
+    }
 
-        .card a {
-            display: block;
-            padding: 12px;
-            background: #004d40;
-            color: white;
-            text-decoration: none;
-            border-radius: 0 0 15px 15px;
-            font-weight: bold;
-            margin-top: auto;
-        }
+    .card img {
+        height: 60%; /* কার্ডের ৬০% জুড়ে ছবি থাকবে */
+    }
 
-        .card a:hover {
-            background: #00796b;
-        }
+    .card h2 {
+        height: 20%;
+        margin: 10px 15px;
+        font-size: 1.2em;
+        color: #004d40;
+        overflow: hidden; /* লেখা সীমাবদ্ধ থাকবে */
+    }
+
+    .card a {
+        height: 20%; /* লিঙ্কের জন্য ফিক্সড জায়গা */
+        text-align: center;
+        padding: 10px 0;
+        text-decoration: none;
+        font-weight: bold;
+        background: #004d40;
+        color: white;
+        border-radius: 0 0 15px 15px;
+    }
+
+    .card a:hover {
+        background: #00796b;
+    }
 
         footer {
             background: #004d40;
