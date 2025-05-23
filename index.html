@@ -1,233 +1,412 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ইসলামিক সাইট</title>
+    <title>আল-হিদায়া | ইসলামিক সাইট</title>
     <style>
-        body {
-            font-family: 'Arial', sans-serif;
+        :root {
+            --primary-color: #004d40;
+            --secondary-color: #00796b;
+            --accent-color: #ffc107;
+            --text-color: #333;
+            --light-bg: #f5f5f5;
+            --white: #ffffff;
+        }
+        
+        * {
             margin: 0;
             padding: 0;
-            background: linear-gradient(to bottom, #f0f0f0, #e6e6e6);
-            color: #333;
+            box-sizing: border-box;
         }
+        
+        body {
+            font-family: 'SolaimanLipi', 'Arial', sans-serif;
+            background: var(--light-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        
+        /* হেডার স্টাইল */
         header {
-            background: #004d40;
-            color: white;
-            text-align: center;
-            padding: 20px 0;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--white);
+            padding: 15px 0;
             position: sticky;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
-        header h1 {
+        
+        .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo {
+            height: 50px;
+            width: auto;
+            margin-right: 15px;
+        }
+        
+        .site-title h1 {
+            font-size: 1.8rem;
             margin: 0;
-            font-size: 1.8em;
+            color: var(--white);
         }
-        header p {
+        
+        .site-title p {
+            font-size: 0.9rem;
             margin: 5px 0 0;
-            font-size: 1em;
+            opacity: 0.9;
         }
+        
+        /* নেভিগেশন বার */
         nav {
-            background: #00796b;
+            background: var(--secondary-color);
+            padding: 10px 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .nav-container {
             display: flex;
             justify-content: center;
-            padding: 10px 0;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
         }
+        
         nav a {
-            color: white;
+            color: var(--white);
             text-decoration: none;
-            font-size: 1em;
+            font-size: 1rem;
             margin: 0 15px;
-            padding: 10px 15px;
+            padding: 8px 15px;
             border-radius: 5px;
-            transition: background 0.3s;
+            transition: all 0.3s ease;
+            font-weight: 500;
         }
+        
         nav a:hover {
-            background: #004d40;
+            background: var(--primary-color);
+            transform: translateY(-2px);
         }
-
+        
+        nav a.active {
+            background: var(--accent-color);
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+        
+        /* সার্চ বক্স */
         .search-box {
             text-align: center;
-            margin: 20px;
+            margin: 25px auto;
+            max-width: 600px;
+            padding: 0 20px;
         }
-
+        
         .search-box input {
-            padding: 10px;
-            width: 80%;
-            max-width: 400px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            font-size: 1em;
+            padding: 12px 20px;
+            width: 100%;
+            border-radius: 30px;
+            border: 2px solid #ddd;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
         }
-
+        
+        .search-box input:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* কার্ড কন্টেইনার */
         .container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin: 20px;
-            padding: 10px;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
         }
-
+        
+        /* কার্ড স্টাইল */
         .card {
-            background: white;
-            border: 1px solid #ddd;
+            background: var(--white);
             border-radius: 15px;
             overflow: hidden;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            height: 350px;
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .card-img-container {
+            height: 60%;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .card:hover img {
+            transform: scale(1.05);
+        }
+        
+        .card-content {
+            padding: 15px;
+            flex: 1;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
         }
-
-        .card:hover {
-            transform: scale(1.1); /* হোভার করলে বড় হয়ে দেখাবে */
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); /* হোভার শেডো উন্নত */
-        }
-
-      .card img {
-        width: 100%; /* সম্পূর্ণ প্রস্থ জুড়ে থাকবে */
-        height: 100%; /* সম্পূর্ণ উচ্চতা জুড়ে থাকবে */
-        object-fit: cover; /* ছবির আকৃতি বক্সে সুন্দরভাবে মানিয়ে যাবে */
-        border-radius: 15px 15px 0 0; /* কার্ডের উপরের কোণ নরম করা */
-    }
-
-    .card {
-        height: 300px; /* নির্ধারিত উচ্চতা */
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        border-radius: 15px;
-        overflow: hidden; /* বক্সের বাইরে কিছু দেখাবে না */
-    }
-
-    .card img {
-        height: 60%; /* কার্ডের ৬০% জুড়ে ছবি থাকবে */
-    }
-
-    .card h2 {
-        height: 20%;
-        margin: 10px 15px;
-        font-size: 1.2em;
-        color: #004d40;
-        overflow: hidden; /* লেখা সীমাবদ্ধ থাকবে */
-    }
-
-    .card a {
-        height: 20%; /* লিঙ্কের জন্য ফিক্সড জায়গা */
-        text-align: center;
-        padding: 10px 0;
-        text-decoration: none;
-        font-weight: bold;
-        background: #004d40;
-        color: white;
-        border-radius: 0 0 15px 15px;
-    }
-
-    .card a:hover {
-        background: #00796b;
-    }
-
-        footer {
-            background: #004d40;
-            color: white;
+        
+        .card h2 {
+            font-size: 1.3rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
             text-align: center;
-            padding: 10px 0;
-            font-size: 0.9em;
         }
-
-        footer a {
-            color: #ffcc00;
+        
+        .card a {
+            display: block;
+            text-align: center;
+            padding: 10px;
+            background: var(--primary-color);
+            color: var(--white);
             text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: all 0.3s;
+            margin-top: auto;
         }
-
+        
+        .card a:hover {
+            background: var(--secondary-color);
+        }
+        
+        /* ফুটার */
+        footer {
+            background: var(--primary-color);
+            color: var(--white);
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 50px;
+        }
+        
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        footer p {
+            margin-bottom: 10px;
+        }
+        
+        footer a {
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
         footer a:hover {
             text-decoration: underline;
         }
-
-        /* Media Queries for Responsiveness */
+        
+        .social-icons {
+            margin: 15px 0;
+        }
+        
+        .social-icons a {
+            display: inline-block;
+            margin: 0 10px;
+            color: var(--white);
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+        
+        .social-icons a:hover {
+            color: var(--accent-color);
+        }
+        
+        /* রেসপনসিভ ডিজাইন */
         @media (max-width: 768px) {
-            header h1 {
-                font-size: 1.5em;
+            .header-container {
+                flex-direction: column;
+                text-align: center;
             }
-            header p {
-                font-size: 0.9em;
+            
+            .logo-container {
+                margin-bottom: 15px;
+                justify-content: center;
             }
+            
+            .site-title h1 {
+                font-size: 1.5rem;
+            }
+            
+            .nav-container {
+                flex-wrap: wrap;
+            }
+            
             nav a {
-                font-size: 0.9em;
-                margin: 0 10px;
+                margin: 5px;
+                padding: 8px 12px;
+                font-size: 0.9rem;
             }
-            .card h2 {
-                font-size: 1.2em;
-            }
-
+            
             .container {
-                grid-template-columns: repeat(2, 1fr); /* 2 cards per line */
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+            
+            .card {
+                height: 300px;
             }
         }
     </style>
+    <!-- ফন্ট লিঙ্ক -->
+    <link href="https://fonts.maateen.me/solaiman-lipi/font.css" rel="stylesheet">
+    <!-- ফন্ট অ্যাওয়েসম আইকন -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <header>
-        <h1>ইসলামিক সাইট</h1>
-        <p>আপনার ইসলামিক জ্ঞান বাড়ানোর জন্য</p>
+        <div class="header-container">
+            <div class="logo-container">
+                <!-- লোগো ইমেজ - আপনি আপনার লোগো দিয়ে রিপ্লেস করবেন -->
+                <img src="https://via.placeholder.com/50x50.png?text=AL-HIDAYA" alt="আল-হিদায়া লোগো" class="logo">
+                <div class="site-title">
+                    <h1>আল-হিদায়া</h1>
+                    <p>ইসলামিক জ্ঞান ও নির্দেশনা</p>
+                </div>
+            </div>
+        </div>
     </header>
 
     <nav>
-        <a href="index.html">Home</a>
-        <a href="about.html">About Us</a>
-        <a href="contact.html">Contact</a>
+        <div class="nav-container">
+            <a href="index.html" class="active"><i class="fas fa-home"></i> হোম</a>
+            <a href="quran.html"><i class="fas fa-book-quran"></i> কুরআন</a>
+            <a href="hadith.html"><i class="fas fa-book"></i> হাদিস</a>
+            <a href="dua.html"><i class="fas fa-hands-praying"></i> দোয়া</a>
+            <a href="namaz.html"><i class="fas fa-mosque"></i> নামাজ</a>
+            <a href="about.html"><i class="fas fa-info-circle"></i> সম্পর্কে</a>
+            <a href="contact.html"><i class="fas fa-phone-alt"></i> যোগাযোগ</a>
+        </div>
     </nav>
 
-    <!-- Search Box -->
+    <!-- সার্চ বক্স -->
     <div class="search-box">
-        <input type="text" id="search" placeholder="সার্চ করুন..." onkeyup="filterCards()">
+        <input type="text" id="search" placeholder="আপনি কি খুঁজছেন? (কুরআন, হাদিস, দোয়া...)">
     </div>
 
+    <!-- কার্ড কন্টেইনার -->
     <div class="container" id="card-container">
         <div class="card">
-            <img src="namazersomoy.jpeg" alt="নামাজের সময়সূচি">
-            <h2>নামাজের সময়সূচি</h2>
-            <a href="namaz-timetable.html">দেখুন</a>
+            <div class="card-img-container">
+                <img src="namazersomoy.jpeg" alt="নামাজের সময়সূচি">
+            </div>
+            <div class="card-content">
+                <h2>নামাজের সময়সূচি</h2>
+                <a href="namaz-timetable.html"><i class="fas fa-clock"></i> দেখুন</a>
+            </div>
         </div>
+        
         <div class="card">
-            <img src="surahsommuho.jpeg" alt="সূরা">
-            <h2>ছোটো সূরাসমূহ</h2>
-            <a href="dua-sura.html">দেখুন</a>
+            <div class="card-img-container">
+                <img src="surahsommuho.jpeg" alt="সূরা">
+            </div>
+            <div class="card-content">
+                <h2>ছোটো সূরাসমূহ</h2>
+                <a href="dua-sura.html"><i class="fas fa-book-quran"></i> দেখুন</a>
+            </div>
         </div>
+        
         <div class="card">
-            <img src="namazerdua.jpeg" alt="দোয়া">
-            <h2>নামাজের সব দুআ</h2>
-            <a href="namazdua.html">দেখুন</a>
+            <div class="card-img-container">
+                <img src="namazerdua.jpeg" alt="দোয়া">
+            </div>
+            <div class="card-content">
+                <h2>নামাজের সব দুআ</h2>
+                <a href="namazdua.html"><i class="fas fa-hands-praying"></i> দেখুন</a>
+            </div>
         </div>
+        
         <div class="card">
-            <img src="namazerguide.jpeg" alt="নামাজ শেখা">
-            <h2>নামাজ শেখার গাইড</h2>
-            <a href="namaz-guide.html">দেখুন</a>
+            <div class="card-img-container">
+                <img src="namazerguide.jpeg" alt="নামাজ শেখা">
+            </div>
+            <div class="card-content">
+                <h2>নামাজ শেখার গাইড</h2>
+                <a href="namaz-guide.html"><i class="fas fa-graduation-cap"></i> দেখুন</a>
+            </div>
         </div>
+        
         <div class="card">
-            <img src="namaz.jpeg" alt="প্রশ্ন-উত্তর">
-            <h2>প্রশ্ন-উত্তর</h2>
-            <a href="Islamicqa.html">দেখুন</a>
+            <div class="card-img-container">
+                <img src="namaz.jpeg" alt="প্রশ্ন-উত্তর">
+            </div>
+            <div class="card-content">
+                <h2>প্রশ্ন-উত্তর</h2>
+                <a href="Islamicqa.html"><i class="fas fa-question-circle"></i> দেখুন</a>
+            </div>
         </div>
+        
         <div class="card">
-            <img src="natificaton.jpeg" alt="নোটিফিকেশন">
-            <h2>নামাজের আ্যলার্ম</h2>
-            <a href="alarm.html">দেখুন</a>
+            <div class="card-img-container">
+                <img src="natificaton.jpeg" alt="নোটিফিকেশন">
+            </div>
+            <div class="card-content">
+                <h2>নামাজের আ্যলার্ম</h2>
+                <a href="alarm.html"><i class="fas fa-bell"></i> দেখুন</a>
+            </div>
         </div>
     </div>
 
     <footer>
-        © ২০২৪ ইসলামিক সাইট | 
-        <a href="https://bengeltigerwd.github.io/AL-HIDAYA-WEB-STUDIO-BD/" target="_blank">
-            AL-HIDAYA WEB STUDIO BANGLADESH
-        </a>
+        <div class="footer-container">
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+            <p>© ২০২৪ আল-হিদায়া ইসলামিক সেন্টার | সর্বস্বত্ব সংরক্ষিত</p>
+            <p>ডেভেলপ করেছেন: <a href="https://bengeltigerwd.github.io/AL-HIDAYA-WEB-STUDIO-BD/" target="_blank">আল-হিদায়া ওয়েব স্টুডিও</a></p>
+        </div>
     </footer>
 
     <script>
+        // সার্চ ফাংশনালিটি
         function filterCards() {
             let input = document.getElementById('search').value.toLowerCase();
             let cards = document.querySelectorAll('.card');
@@ -235,12 +414,26 @@
             cards.forEach(card => {
                 let title = card.querySelector('h2').innerText.toLowerCase();
                 if (title.includes(input)) {
-                    card.style.display = 'block';
+                    card.style.display = 'flex';
                 } else {
                     card.style.display = 'none';
                 }
             });
         }
+        
+        // সার্চ ইনপুটে ইভেন্ট লিসেনার যোগ
+        document.getElementById('search').addEventListener('keyup', filterCards);
+        
+        // কার্ডে ক্লিক করলে সংশ্লিষ্ট পেজে নিয়ে যাবে
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('click', function(e) {
+                if (!e.target.classList.contains('card')) return;
+                const link = this.querySelector('a');
+                if (link) {
+                    window.location.href = link.getAttribute('href');
+                }
+            });
+        });
     </script>
 </body>
 </html>
