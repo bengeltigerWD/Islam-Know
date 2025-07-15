@@ -46,6 +46,7 @@
             border: 1px solid #ddd;
             border-radius: 5px;
             font-size: 1em;
+            margin-bottom: 10px;
         }
         .buttons {
             text-align: center;
@@ -85,6 +86,12 @@
             border-radius: 5px;
             text-align: center;
         }
+        .date-info {
+            text-align: center;
+            margin-bottom: 15px;
+            font-weight: bold;
+            color: #004d40;
+        }
         footer {
             background: #004d40;
             color: white;
@@ -99,6 +106,11 @@
         }
         footer a:hover {
             text-decoration: underline;
+        }
+        .loading {
+            text-align: center;
+            color: #00796b;
+            font-style: italic;
         }
     </style>
 </head>
@@ -115,102 +127,145 @@
 
         <h2>আপনার এলাকা নির্বাচন করুন</h2>
         <div class="form-group">
-            <label for="location">এলাকা নির্বাচন করুন:</label>
-            <select id="location" onchange="showNamazTimes()">
-                <option value="">-- এলাকা নির্বাচন করুন --</option>
-                <option value="dhaka">ঢাকা</option>
-                <option value="chattogram">চট্টগ্রাম</option>
-                <option value="khulna">খুলনা</option>
-                <option value="rajshahi">রাজশাহী</option>
-                <option value="sylhet">সিলেট</option>
+            <label for="division">বিভাগ নির্বাচন করুন:</label>
+            <select id="division" onchange="loadDistricts()">
+                <option value="">-- বিভাগ নির্বাচন করুন --</option>
+                <option value="Dhaka">ঢাকা</option>
+                <option value="Chittagong">চট্টগ্রাম</option>
+                <option value="Khulna">খুলনা</option>
+                <option value="Rajshahi">রাজশাহী</option>
+                <option value="Sylhet">সিলেট</option>
+                <option value="Barisal">বরিশাল</option>
+                <option value="Rangpur">রংপুর</option>
+                <option value="Mymensingh">ময়মনসিংহ</option>
+            </select>
+
+            <label for="district">জেলা নির্বাচন করুন:</label>
+            <select id="district" onchange="showNamazTimes()" disabled>
+                <option value="">-- প্রথমে বিভাগ নির্বাচন করুন --</option>
             </select>
         </div>
 
         <div class="namaz-times" id="namaz-times" style="display: none;">
             <h3 id="location-name"></h3>
+            <div class="date-info" id="date-info"></div>
             <ul id="namaz-list"></ul>
         </div>
+        <div id="loading" class="loading" style="display: none;">লোড হচ্ছে...</div>
     </div>
 
     <footer>
         © ২০২৪ ইসলামিক সাইট | 
-        <a href=" https://bengeltigerwd.github.io/AL-HIDAYA-WEB-STUDIO-BD/" target="_blank">
+        <a href="https://bengeltigerwd.github.io/AL-HIDAYA-WEB-STUDIO-BD/" target="_blank">
           AL-HIDAYA WEB STUDIO BANGLADESH
         </a>
     </footer>
 
     <script>
-        const namazData = {
-            dhaka: {
-                name: "ঢাকা",
-                times: {
-                    ফজর: "৫:০০ AM",
-                    জোহর: "১২:৩০ PM",
-                    আসর: "৪:১৫ PM",
-                    মাগরিব: "৬:২০ PM",
-                    এশা: "৮:০০ PM"
-                }
-            },
-            chattogram: {
-                name: "চট্টগ্রাম",
-                times: {
-                    ফজর: "৪:৫৫ AM",
-                    জোহর: "১২:২৫ PM",
-                    আসর: "৪:১০ PM",
-                    মাগরিব: "৬:১৫ PM",
-                    এশা: "৭:৫০ PM"
-                }
-            },
-            khulna: {
-                name: "খুলনা",
-                times: {
-                    ফজর: "৫:১০ AM",
-                    জোহর: "১২:৪৫ PM",
-                    আসর: "৪:২০ PM",
-                    মাগরিব: "৬:২৫ PM",
-                    এশা: "৮:১০ PM"
-                }
-            },
-            rajshahi: {
-                name: "রাজশাহী",
-                times: {
-                    ফজর: "৫:০৫ AM",
-                    জোহর: "১২:৩৫ PM",
-                    আসর: "৪:১৮ PM",
-                    মাগরিব: "৬:২২ PM",
-                    এশা: "৮:০৫ PM"
-                }
-            },
-            sylhet: {
-                name: "সিলেট",
-                times: {
-                    ফজর: "৪:৫০ AM",
-                    জোহর: "১২:২০ PM",
-                    আসর: "৪:০৫ PM",
-                    মাগরিব: "৬:১০ PM",
-                    এশা: "৭:৪৫ PM"
-                }
-            }
+        // District data organized by division
+        const districtData = {
+            "Dhaka": ["ঢাকা", "নারায়ণগঞ্জ", "গাজীপুর", "টাঙ্গাইল", "কিশোরগঞ্জ", "মানিকগঞ্জ", "মুন্সিগঞ্জ", "নরসিংদী", "ফরিদপুর", "মাদারীপুর", "শরীয়তপুর", "গোপালগঞ্জ", "রাজবাড়ী"],
+            "Chittagong": ["চট্টগ্রাম", "কুমিল্লা", "ফেনী", "ব্রাহ্মণবাড়িয়া", "নোয়াখালী", "লক্ষ্মীপুর", "চাঁদপুর", "কক্সবাজার", "খাগড়াছড়ি", "রাঙ্গামাটি", "বান্দরবান"],
+            "Khulna": ["খুলনা", "বাগেরহাট", "সাতক্ষীরা", "যশোর", "ঝিনাইদহ", "মাগুরা", "কুষ্টিয়া", "মেহেরপুর", "চুয়াডাঙ্গা", "নড়াইল"],
+            "Rajshahi": ["রাজশাহী", "বগুড়া", "পাবনা", "সিরাজগঞ্জ", "নাটোর", "নওগাঁ", "জয়পুরহাট", "চাঁপাইনবাবগঞ্জ"],
+            "Sylhet": ["সিলেট", "মৌলভীবাজার", "হবিগঞ্জ", "সুনামগঞ্জ"],
+            "Barisal": ["বরিশাল", "পটুয়াখালী", "পিরোজপুর", "ভোলা", "ঝালকাঠি", "বরগুনা"],
+            "Rangpur": ["রংপুর", "দিনাজপুর", "নীলফামারী", "গাইবান্ধা", "কুড়িগ্রাম", "লালমনিরহাট", "ঠাকুরগাঁও", "পঞ্চগড়"],
+            "Mymensingh": ["ময়মনসিংহ", "জামালপুর", "শেরপুর", "নেত্রকোণা"]
         };
 
-        function showNamazTimes() {
-            const location = document.getElementById("location").value;
+        function loadDistricts() {
+            const divisionSelect = document.getElementById("division");
+            const districtSelect = document.getElementById("district");
+            
+            // Clear previous districts
+            districtSelect.innerHTML = '<option value="">-- জেলা নির্বাচন করুন --</option>';
+            
+            if (divisionSelect.value) {
+                // Enable district select
+                districtSelect.disabled = false;
+                
+                // Load districts for selected division
+                const districts = districtData[divisionSelect.value];
+                districts.forEach(district => {
+                    const option = document.createElement("option");
+                    option.value = district;
+                    option.textContent = district;
+                    districtSelect.appendChild(option);
+                });
+            } else {
+                // Disable district select if no division selected
+                districtSelect.disabled = true;
+                districtSelect.innerHTML = '<option value="">-- প্রথমে বিভাগ নির্বাচন করুন --</option>';
+            }
+            
+            // Hide any previous prayer times
+            document.getElementById("namaz-times").style.display = "none";
+        }
+
+        async function showNamazTimes() {
+            const district = document.getElementById("district").value;
+            const division = document.getElementById("division").value;
             const namazSection = document.getElementById("namaz-times");
             const locationName = document.getElementById("location-name");
             const namazList = document.getElementById("namaz-list");
+            const dateInfo = document.getElementById("date-info");
+            const loading = document.getElementById("loading");
 
-            if (location) {
-                const data = namazData[location];
-                locationName.textContent = data.name + " এর নামাজের সময়সূচি";
-                namazList.innerHTML = "";
-
-                for (const [key, value] of Object.entries(data.times)) {
-                    const li = document.createElement("li");
-                    li.textContent = `${key}: ${value}`;
-                    namazList.appendChild(li);
+            if (district && division) {
+                loading.style.display = "block";
+                namazSection.style.display = "none";
+                
+                try {
+                    // Get today's date in DD-MM-YYYY format
+                    const today = new Date();
+                    const dd = String(today.getDate()).padStart(2, '0');
+                    const mm = String(today.getMonth() + 1).padStart(2, '0');
+                    const yyyy = today.getFullYear();
+                    const dateStr = `${dd}-${mm}-${yyyy}`;
+                    
+                    // Fetch prayer times from Aladhan API
+                    const response = await fetch(`https://api.aladhan.com/v1/timingsByCity/${dateStr}?city=${district}&country=Bangladesh&method=1`);
+                    const data = await response.json();
+                    
+                    if (data.code === 200) {
+                        const timings = data.data.timings;
+                        
+                        locationName.textContent = `${division} বিভাগ, ${district} জেলার নামাজের সময়সূচি`;
+                        dateInfo.textContent = `তারিখ: ${data.data.date.readable} | হিজরি: ${data.data.date.hijri.date}`;
+                        
+                        namazList.innerHTML = "";
+                        
+                        // Display the main prayer times
+                        const prayers = {
+                            "ফজর": timings.Fajr,
+                            "সূর্যোদয়": timings.Sunrise,
+                            "জোহর": timings.Dhuhr,
+                            "আসর": timings.Asr,
+                            "সূর্যাস্ত": timings.Sunset,
+                            "মাগরিব": timings.Maghrib,
+                            "এশা": timings.Isha,
+                            "মধ্যরাত": timings.Midnight
+                        };
+                        
+                        for (const [key, value] of Object.entries(prayers)) {
+                            const li = document.createElement("li");
+                            li.textContent = `${key}: ${value}`;
+                            namazList.appendChild(li);
+                        }
+                        
+                        namazSection.style.display = "block";
+                    } else {
+                        throw new Error("Prayer times not available");
+                    }
+                } catch (error) {
+                    console.error("Error fetching prayer times:", error);
+                    locationName.textContent = "ত্রুটি";
+                    namazList.innerHTML = "<li>এই জেলার জন্য নামাজের সময়সূচী লোড করতে সমস্যা হয়েছে। পরে আবার চেষ্টা করুন।</li>";
+                    namazSection.style.display = "block";
+                } finally {
+                    loading.style.display = "none";
                 }
-
-                namazSection.style.display = "block";
             } else {
                 namazSection.style.display = "none";
             }
