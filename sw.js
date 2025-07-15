@@ -24,8 +24,8 @@ self.addEventListener('message', (event) => {
             
             // Show notification
             self.registration.showNotification(`${prayer} নামাজের সময়`, {
-                body: 'আযান শুনুন এবং নামাজ আদায় করুন',
-                icon: 'https://i.ibb.co/0jQ7ZqC/islamic-icon.png',
+                body: ' নামাজ আদায় করুন',
+                icon: 'namaz.jpeg',
                 requireInteraction: true
             });
             
