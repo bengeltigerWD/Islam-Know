@@ -12,6 +12,7 @@
             --text-color: #333;
             --light-bg: #f5f5f5;
             --white: #ffffff;
+            --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
         
         * {
@@ -35,7 +36,7 @@
             position: sticky;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            box-shadow: var(--box-shadow);
         }
         
         .header-container {
@@ -50,18 +51,27 @@
         .logo-container {
             display: flex;
             align-items: center;
+            animation: fadeInDown 0.8s ease;
         }
         
         .logo {
             height: 50px;
             width: auto;
             margin-right: 15px;
+            border-radius: 50%;
+            border: 2px solid var(--accent-color);
+            transition: transform 0.3s ease;
+        }
+        
+        .logo:hover {
+            transform: rotate(15deg);
         }
         
         .site-title h1 {
             font-size: 1.8rem;
             margin: 0;
             color: var(--white);
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
         }
         
         .site-title p {
@@ -83,21 +93,39 @@
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
+            flex-wrap: wrap;
         }
         
         nav a {
             color: var(--white);
             text-decoration: none;
             font-size: 1rem;
-            margin: 0 15px;
+            margin: 0 10px;
             padding: 8px 15px;
             border-radius: 5px;
             transition: all 0.3s ease;
             font-weight: 500;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-color);
+            transition: width 0.3s ease;
+        }
+        
+        nav a:hover::after {
+            width: 100%;
         }
         
         nav a:hover {
-            background: var(--primary-color);
+            color: var(--accent-color);
             transform: translateY(-2px);
         }
         
@@ -107,12 +135,45 @@
             font-weight: bold;
         }
         
+        /* হিরো সেকশন */
+        .hero {
+            background: linear-gradient(rgba(0, 77, 64, 0.8), rgba(0, 121, 107, 0.8)), url('islamic-pattern.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--white);
+            margin-bottom: 30px;
+            animation: fadeIn 1s ease;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            padding: 0 20px;
+        }
+        
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+        
         /* সার্চ বক্স */
         .search-box {
             text-align: center;
             margin: 25px auto;
             max-width: 600px;
             padding: 0 20px;
+            position: relative;
+            animation: fadeInUp 0.8s ease;
         }
         
         .search-box input {
@@ -123,12 +184,22 @@
             font-size: 1rem;
             outline: none;
             transition: all 0.3s;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            box-shadow: var(--box-shadow);
+            padding-right: 50px;
         }
         
         .search-box input:focus {
             border-color: var(--accent-color);
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .search-icon {
+            position: absolute;
+            right: 35px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary-color);
+            font-size: 1.2rem;
         }
         
         /* কার্ড কন্টেইনার */
@@ -146,12 +217,23 @@
             background: var(--white);
             border-radius: 15px;
             overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            box-shadow: var(--box-shadow);
             transition: all 0.3s ease;
             display: flex;
             flex-direction: column;
             height: 350px;
+            position: relative;
+            animation: fadeIn 0.5s ease;
+            animation-fill-mode: both;
         }
+        
+        /* প্রতিটি কার্ডের জন্য আলাদা এনিমেশন ডিলে */
+        .card:nth-child(1) { animation-delay: 0.2s; }
+        .card:nth-child(2) { animation-delay: 0.4s; }
+        .card:nth-child(3) { animation-delay: 0.6s; }
+        .card:nth-child(4) { animation-delay: 0.8s; }
+        .card:nth-child(5) { animation-delay: 1.0s; }
+        .card:nth-child(6) { animation-delay: 1.2s; }
         
         .card:hover {
             transform: translateY(-10px);
@@ -159,7 +241,7 @@
         }
         
         .card-img-container {
-            height: 60%;
+            height: 180px; /* ফিক্সড হাইট */
             overflow: hidden;
             position: relative;
         }
@@ -172,7 +254,7 @@
         }
         
         .card:hover img {
-            transform: scale(1.05);
+            transform: scale(1.1);
         }
         
         .card-content {
@@ -205,6 +287,7 @@
         
         .card a:hover {
             background: var(--secondary-color);
+            transform: translateY(-3px);
         }
         
         /* ফুটার */
@@ -212,7 +295,7 @@
             background: var(--primary-color);
             color: var(--white);
             text-align: center;
-            padding: 20px 0;
+            padding: 30px 0;
             margin-top: 50px;
         }
         
@@ -222,34 +305,110 @@
             padding: 0 20px;
         }
         
-        footer p {
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            text-align: left;
+            margin-bottom: 20px;
+        }
+        
+        .footer-section h3 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: var(--accent-color);
+        }
+        
+        .footer-section ul {
+            list-style: none;
+        }
+        
+        .footer-section ul li {
+            margin-bottom: 8px;
+        }
+        
+        .footer-section ul li a {
+            color: var(--white);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-section ul li a:hover {
+            color: var(--accent-color);
+            text-decoration: underline;
+        }
+        
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 20px;
+        }
+        
+        .footer-bottom p {
             margin-bottom: 10px;
         }
         
-        footer a {
+        .footer-bottom a {
             color: var(--accent-color);
             text-decoration: none;
             font-weight: bold;
         }
         
-        footer a:hover {
+        .footer-bottom a:hover {
             text-decoration: underline;
         }
         
         .social-icons {
             margin: 15px 0;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
         }
         
         .social-icons a {
-            display: inline-block;
-            margin: 0 10px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
             color: var(--white);
-            font-size: 1.5rem;
-            transition: color 0.3s;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            transition: all 0.3s;
         }
         
         .social-icons a:hover {
-            color: var(--accent-color);
+            background: var(--accent-color);
+            color: var(--primary-color);
+            transform: translateY(-3px);
+        }
+        
+        /* এনিমেশন */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         
         /* রেসপনসিভ ডিজাইন */
@@ -278,8 +437,24 @@
                 font-size: 0.9rem;
             }
             
+            .hero {
+                height: 250px;
+            }
+            
+            .hero h2 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
             .container {
                 grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+            
+            .card-img-container {
+                height: 150px;
             }
         }
         
@@ -289,7 +464,15 @@
             }
             
             .card {
-                height: 300px;
+                height: 320px;
+            }
+            
+            .hero {
+                height: 200px;
+            }
+            
+            .hero h2 {
+                font-size: 1.5rem;
             }
         }
     </style>
@@ -297,12 +480,13 @@
     <link href="https://fonts.maateen.me/solaiman-lipi/font.css" rel="stylesheet">
     <!-- ফন্ট অ্যাওয়েসম আইকন -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- AOS অ্যানিমেশন লাইব্রেরি -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 </head>
 <body>
     <header>
         <div class="header-container">
             <div class="logo-container">
-                <!-- লোগো ইমেজ - আপনি আপনার লোগো দিয়ে রিপ্লেস করবেন -->
                 <img src="arabic-calligraphy-.jpg" alt="আল-হিদায়া লোগো" class="logo">
                 <div class="site-title">
                     <h1>আল-হিদায়া</h1>
@@ -315,8 +499,8 @@
     <nav>
         <div class="nav-container">
             <a href="index.html" class="active"><i class="fas fa-home"></i> হোম</a>
-            <a href="quran.html"><i class="fas fa-book-quran"></i> কুরআন</a>
-            <a href="hadith.html"><i class="fas fa-book"></i> হাদিস</a>
+            <a href="https://quran.com/" target="_blank"><i class="fas fa-book-quran"></i> কুরআন</a>
+            <a href="https://sunnah.com/" target="_blank"><i class="fas fa-book"></i> হাদিস</a>
             <a href="dua.html"><i class="fas fa-hands-praying"></i> দোয়া</a>
             <a href="namaz.html"><i class="fas fa-mosque"></i> নামাজ</a>
             <a href="about.html"><i class="fas fa-info-circle"></i> সম্পর্কে</a>
@@ -324,14 +508,23 @@
         </div>
     </nav>
 
+    <!-- হিরো সেকশন -->
+    <section class="hero">
+        <div class="hero-content">
+            <h2>ইসলামিক জ্ঞানের ভান্ডারে স্বাগতম</h2>
+            <p>কুরআন, হাদিস, নামাজ ও দৈনন্দিন জীবনের ইসলামিক নির্দেশনা</p>
+        </div>
+    </section>
+
     <!-- সার্চ বক্স -->
     <div class="search-box">
         <input type="text" id="search" placeholder="আপনি কি খুঁজছেন? (কুরআন, হাদিস, দোয়া...)">
+        <i class="fas fa-search search-icon"></i>
     </div>
 
     <!-- কার্ড কন্টেইনার -->
     <div class="container" id="card-container">
-        <div class="card">
+        <div class="card" data-aos="fade-up">
             <div class="card-img-container">
                 <img src="namazersomoy.jpeg" alt="নামাজের সময়সূচি">
             </div>
@@ -341,7 +534,7 @@
             </div>
         </div>
         
-        <div class="card">
+        <div class="card" data-aos="fade-up" data-aos-delay="100">
             <div class="card-img-container">
                 <img src="surahsommuho.jpeg" alt="সূরা">
             </div>
@@ -351,7 +544,7 @@
             </div>
         </div>
         
-        <div class="card">
+        <div class="card" data-aos="fade-up" data-aos-delay="200">
             <div class="card-img-container">
                 <img src="namazerdua.jpeg" alt="দোয়া">
             </div>
@@ -361,7 +554,7 @@
             </div>
         </div>
         
-        <div class="card">
+        <div class="card" data-aos="fade-up" data-aos-delay="300">
             <div class="card-img-container">
                 <img src="namazerguide.jpeg" alt="নামাজ শেখা">
             </div>
@@ -371,7 +564,7 @@
             </div>
         </div>
         
-        <div class="card">
+        <div class="card" data-aos="fade-up" data-aos-delay="400">
             <div class="card-img-container">
                 <img src="namaz.jpeg" alt="প্রশ্ন-উত্তর">
             </div>
@@ -381,7 +574,7 @@
             </div>
         </div>
         
-        <div class="card">
+        <div class="card" data-aos="fade-up" data-aos-delay="500">
             <div class="card-img-container">
                 <img src="natificaton.jpeg" alt="নোটিফিকেশন">
             </div>
@@ -394,18 +587,60 @@
 
     <footer>
         <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>গুরুত্বপূর্ণ লিংক</h3>
+                    <ul>
+                        <li><a href="index.html">হোম</a></li>
+                        <li><a href="namaz.html">নামাজ শিক্ষা</a></li>
+                        <li><a href="dua.html">দোয়া সমূহ</a></li>
+                        <li><a href="about.html">আমাদের সম্পর্কে</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>বাহ্যিক সংযোগ</h3>
+                    <ul>
+                        <li><a href="https://quran.com/" target="_blank">কুরআন</a></li>
+                        <li><a href="https://sunnah.com/" target="_blank">হাদিস</a></li>
+                        <li><a href="https://islamqa.info/" target="_blank">ইসলামিক প্রশ্নোত্তর</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>যোগাযোগ</h3>
+                    <ul>
+                        <li><i class="fas fa-envelope"></i> info@alhidaya.com</li>
+                        <li><i class="fas fa-phone"></i> +880 1234 567890</li>
+                        <li><i class="fas fa-map-marker-alt"></i> ঢাকা, বাংলাদেশ</li>
+                    </ul>
+                </div>
+            </div>
+            
             <div class="social-icons">
-                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
                 <a href="#"><i class="fab fa-youtube"></i></a>
                 <a href="#"><i class="fab fa-twitter"></i></a>
                 <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-whatsapp"></i></a>
             </div>
-            <p>© ২০২৪ আল-হিদায়া ইসলামিক সেন্টার | সর্বস্বত্ব সংরক্ষিত</p>
-            <p>ডেভেলপ করেছেন: <a href="https://bengeltigerwd.github.io/AL-HIDAYA-WEB-STUDIO-BD/" target="_blank">আল-হিদায়া ওয়েব স্টুডিও</a></p>
+            
+            <div class="footer-bottom">
+                <p>© ২০২৪ আল-হিদায়া ইসলামিক সেন্টার | সর্বস্বত্ব সংরক্ষিত</p>
+                <p>ডেভেলপ করেছেন: <a href="https://bengeltigerwd.github.io/AL-HIDAYA-WEB-STUDIO-BD/" target="_blank">আল-হিদায়া ওয়েব স্টুডিও</a></p>
+            </div>
         </div>
     </footer>
 
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
+        // AOS অ্যানিমেশন ইনিশিয়ালাইজ
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true
+        });
+        
         // সার্চ ফাংশনালিটি
         function filterCards() {
             let input = document.getElementById('search').value.toLowerCase();
