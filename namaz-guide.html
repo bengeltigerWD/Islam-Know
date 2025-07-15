@@ -3,120 +3,386 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>নামাজ শেখার গাইড</title>
+    <title>নামাজ শেখার গাইড </title>
     <style>
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: 'Segoe UI', 'Kalpurush', 'Arial', sans-serif;
             margin: 0;
             padding: 0;
-            background: #f1f8e9;
+            background: #f5f5f5;
             color: #333;
+            line-height: 1.6;
         }
         header {
-            background: #004d40;
+            background: linear-gradient(135deg, #004d40, #00796b);
             color: white;
             text-align: center;
-            padding: 20px 0;
-            font-size: 2em;
+            padding: 25px 0;
+            font-size: 2.2em;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            font-family: 'Kalpurush', sans-serif;
         }
         .btn-container {
             display: flex;
             justify-content: center;
             gap: 20px;
-            padding: 10px;
+            padding: 15px;
             background: #00796b;
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
         .btn-container a {
             text-decoration: none;
             color: white;
             background: #388e3c;
-            padding: 10px 20px;
-            border-radius: 5px;
+            padding: 12px 25px;
+            border-radius: 30px;
             font-size: 1.2em;
             font-weight: bold;
-            transition: background 0.3s ease;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            font-family: 'Kalpurush', sans-serif;
         }
         .btn-container a:hover {
             background: #2e7d32;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
         }
         .guide-content {
-            padding: 20px;
+            padding: 30px;
             max-width: 900px;
-            margin: 0 auto;
+            margin: 20px auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
         .guide-content h2 {
             text-align: center;
             color: #004d40;
+            font-size: 1.8em;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #00796b;
+            font-family: 'Kalpurush', sans-serif;
         }
-        .guide-content ul {
-            font-size: 1.2em;
-            list-style-type: decimal;
-            margin-left: 40px;
+        .prayer-step {
+            margin: 20px 0;
+            padding: 15px;
+            border-left: 4px solid #388e3c;
+            background: #f1f8e9;
+            border-radius: 0 8px 8px 0;
+            transition: all 0.3s ease;
         }
-        .guide-content ul li {
+        .prayer-step:hover {
+            background: #e8f5e9;
+            transform: translateX(5px);
+        }
+        .step-title {
+            font-weight: bold;
+            font-size: 1.3em;
+            color: #004d40;
+            margin-bottom: 8px;
+            font-family: 'Kalpurush', sans-serif;
+        }
+        .step-description {
+            margin: 8px 0;
+            font-size: 1.1em;
+        }
+        .hadith-ref {
+            font-style: italic;
+            color: #00796b;
+            margin-top: 8px;
+            font-size: 0.95em;
+            background: #e8f5e9;
+            padding: 5px 10px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+        .arabic-text {
+            font-family: 'Traditional Arabic', 'Arial', sans-serif;
+            font-size: 1.3em;
+            text-align: right;
+            direction: rtl;
             margin: 10px 0;
+            padding: 10px;
+            background: #f9f9f9;
+            border-radius: 5px;
+            border-right: 3px solid #004d40;
+        }
+        .translation {
+            font-size: 1.1em;
+            color: #555;
+            margin-bottom: 5px;
         }
         .video-section {
-            margin-top: 30px;
+            margin: 40px 0 20px;
             text-align: center;
+        }
+        .video-section h3 {
+            color: #004d40;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            font-family: 'Kalpurush', sans-serif;
         }
         .video-section iframe {
             width: 100%;
-            max-width: 600px;
-            height: 350px;
+            max-width: 800px;
+            height: 450px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        .note-box {
+            background: #fff8e1;
+            padding: 15px;
+            border-left: 4px solid #ffa000;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .note-title {
+            font-weight: bold;
+            color: #ff6f00;
+            margin-bottom: 8px;
+            font-size: 1.1em;
         }
         footer {
-            background: #004d40;
+            background: linear-gradient(135deg, #004d40, #00796b);
             color: white;
             text-align: center;
-            padding: 10px 0;
-            font-size: 0.9em;
+            padding: 20px 0;
+            font-size: 1em;
+            margin-top: 30px;
         }
         footer a {
             color: #ffcc00;
             text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
         }
         footer a:hover {
             text-decoration: underline;
+            color: #ffd700;
+        }
+        @media (max-width: 768px) {
+            header {
+                font-size: 1.8em;
+                padding: 20px 0;
+            }
+            .btn-container {
+                flex-direction: column;
+                gap: 10px;
+                padding: 10px;
+            }
+            .btn-container a {
+                padding: 10px;
+                font-size: 1em;
+            }
+            .guide-content {
+                padding: 15px;
+            }
+            .video-section iframe {
+                height: 250px;
+            }
         }
     </style>
 </head>
 <body>
     <header>
-        নামাজ শেখার গাইড
+        নামাজ শেখার গাইড - হানাফি মাযহাব
     </header>
 
     <!-- Back এবং Home বাটন -->
     <div class="btn-container">
-        <a href="javascript:history.back()">Back</a>
-        <a href="index.html">Home</a>
+        <a href="javascript:history.back()">পিছনে</a>
+        <a href="index.html">হোম</a>
     </div>
 
     <div class="guide-content">
         <h2>নামাজের ধাপসমূহ</h2>
-        <ul>
-            <li>১. অযু করা (পবিত্রতা অর্জন)</li>
-            <li>২. কিবলা দিকে মুখ করা</li>
-            <li>৩. নামাজের নিয়ত করা</li>
-            <li>৪. হাত বাঁধা (তাহারীকা)</li>
-            <li>৫. সুরা ফাতিহা পড়া</li>
-            <li>৬. রুকু (কমানো) করা</li>
-            <li>৭. সিজদা (সিজদায় যাওয়া)</li>
-            <li>৮. তাশাহুদ (সাক্ষ্য দেওয়া)</li>
-            <li>৯. সালাম দেওয়া (আল্লাহর নাম নিয়ে শেষ করা)</li>
-        </ul>
+        
+        <div class="prayer-step">
+            <div class="step-title">১. অযু করা (পবিত্রতা অর্জন)</div>
+            <div class="step-description">
+                নামাজের পূর্বে অযু করা ফরজ। অযু করার সঠিক পদ্ধতি হল:
+                <ol>
+                    <li>নিয়ত করা (মনে মনে)</li>
+                    <li>বিসমিল্লাহ বলা</li>
+                    <li>হাতের কব্জি পর্যন্ত তিনবার ধৌত করা</li>
+                    <li>মুখমণ্ডল তিনবার ধৌত করা</li>
+                    <li>ডান হাত কনুইসহ তিনবার ধৌত করা</li>
+                    <li>বাম হাত কনুইসহ তিনবার ধৌত করা</li>
+                    <li>মাথা মাসেহ করা (একবার)</li>
+                    <li>ডান পা টাখনুসহ তিনবার ধৌত করা</li>
+                    <li>বাম পা টাখনুসহ তিনবার ধৌত করা</li>
+                </ol>
+            </div>
+            <div class="hadith-ref">
+                হাদিস: "আল্লাহ তাআলা অযু ছাড়া কোনো নামাজ গ্রহণ করেন না।" (সহীহ মুসলিম, ২২৪)
+            </div>
+        </div>
+        
+        <div class="prayer-step">
+            <div class="step-title">২. কিবলা দিকে মুখ করা</div>
+            <div class="step-description">
+                কাবা শরিফের দিকে মুখ করে নামাজ আদায় করতে হবে। যদি কিবলার দিক নিশ্চিত না জানা থাকে তবে অনুমান করে নিবেন।
+            </div>
+            <div class="hadith-ref">
+                হাদিস: "কিবলার দিকে মুখ করো।" (সহীহ বুখারী, ৪০১)
+            </div>
+        </div>
+        
+        <div class="prayer-step">
+            <div class="step-title">৩. নামাজের নিয়ত করা</div>
+            <div class="step-description">
+                মনে মনে কোন নামাজ, কত রাকাআত পড়বেন তার নিয়ত করতে হবে। নিয়ত মুখে বলা বিদআত (নব আবিষ্কৃত আমল)।
+            </div>
+            <div class="hadith-ref">
+                হাদিস: "নিশ্চয় সকল কাজ নিয়তের উপর নির্ভরশীল।" (সহীহ বুখারী, ১)
+            </div>
+        </div>
+        
+        <div class="prayer-step">
+            <div class="step-title">৪. তাকবীরে তাহরীমা (আল্লাহু আকবার বলে নামাজ শুরু করা)</div>
+            <div class="step-description">
+                দুই হাত কান পর্যন্ত উঠিয়ে "আল্লাহু আকবার" বলে নামাজ শুরু করতে হবে। এরপর হাত বাঁধতে হবে - ডান হাত বাম হাতের উপর নাভির নিচে রাখবেন।
+            </div>
+            <div class="arabic-text">
+                اللهُ أَكْبَرُ
+            </div>
+            <div class="translation">
+                অর্থ: আল্লাহ সর্বশ্রেষ্ঠ।
+            </div>
+            <div class="hadith-ref">
+                হাদিস: "নবী (সা.) নামাজ শুরু করতেন 'আল্লাহু আকবার' বলে।" (সুনান আবু দাউদ, ৭৩০)
+            </div>
+        </div>
+        
+        <div class="prayer-step">
+            <div class="step-title">৫. সানা পড়া</div>
+            <div class="arabic-text">
+                سُبْحَانَكَ اللَّهُمَّ وَبِحَمْدِكَ، وَتَبَارَكَ اسْمُكَ، وَتَعَالَى جَدُّكَ، وَلاَ إِلَهَ غَيْرُكَ
+            </div>
+            <div class="translation">
+                অর্থ: হে আল্লাহ! আমি তোমার পবিত্রতা বর্ণনা করি এবং তোমার প্রশংসা করি। তোমার নাম বরকতময় এবং তোমার মর্যাদা সর্বোচ্চ। তুমি ছাড়া কোনো ইলাহ নেই।
+            </div>
+            <div class="hadith-ref">
+                হাদিস: "নবী (সা.) নামাজে এ দোয়া পড়তেন।" (সুনান আবু দাউদ, ৭৭৫)
+            </div>
+        </div>
+        
+        <div class="prayer-step">
+            <div class="step-title">৬. সুরা ফাতিহা পড়া</div>
+            <div class="step-description">
+                প্রত্যেক রাকাআতে সুরা ফাতিহা পড়া ফরজ। ফাতিহার আগে "আউযুবিল্লাহ..." ও "বিসমিল্লাহ..." পড়তে হবে।
+            </div>
+            <div class="arabic-text">
+                أَعُوذُ بِاللَّهِ مِنَ الشَّيْطَانِ الرَّجِيمِ<br>
+                بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ<br>
+                الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ ﴿١﴾ الرَّحْمَٰنِ الرَّحِيمِ ﴿٢﴾ مَالِكِ يَوْمِ الدِّينِ ﴿٣﴾ إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ ﴿٤﴾ اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ ﴿٥﴾ صِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلَا الضَّالِّينَ ﴿٦﴾
+            </div>
+            <div class="hadith-ref">
+                হাদিস: "যে নামাজে সূরা ফাতিহা পড়া হয়নি, তা অসম্পূর্ণ।" (সহীহ মুসলিম, ৩৯৫)
+            </div>
+        </div>
+        
+        <div class="prayer-step">
+            <div class="step-title">৭. রুকু করা</div>
+            <div class="step-description">
+                "আল্লাহু আকবার" বলে রুকুতে যাবেন। রুকুতে হাঁটুতে হাত রেখে পিঠ সমান করে রাখবেন এবং তিনবার "সুবহানা রাব্বিয়াল আযীম" পড়বেন।
+            </div>
+            <div class="arabic-text">
+                سُبْحَانَ رَبِّيَ الْعَظِيمِ
+            </div>
+            <div class="translation">
+                অর্থ: আমার মহান রবের পবিত্রতা বর্ণনা করছি।
+            </div>
+            <div class="hadith-ref">
+                হাদিস: "রুকু অবস্থায় 'সুবহানা রাব্বিয়াল আযীম' বলো।" (সুনান আবু দাউদ, ৮৭০)
+            </div>
+        </div>
+        
+        <div class="prayer-step">
+            <div class="step-title">৮. সিজদা করা</div>
+            <div class="step-description">
+                রুকু থেকে উঠে "সামিআল্লাহু লিমান হামিদাহ" বলবেন, তারপর "আল্লাহু আকবার" বলে সিজদায় যাবেন। সিজদায় তিনবার "সুবহানা রাব্বিয়াল আ'লা" পড়বেন।
+            </div>
+            <div class="arabic-text">
+                سُبْحَانَ رَبِّيَ الْأَعْلَى
+            </div>
+            <div class="translation">
+                অর্থ: আমার সর্বোচ্চ রবের পবিত্রতা বর্ণনা করছি।
+            </div>
+            <div class="hadith-ref">
+                হাদিস: "সিজদায় তোমাদের অঙ্গ-প্রত্যঙ্গ স্থির রাখো।" (সহীহ বুখারী, ৭৯৩)
+            </div>
+        </div>
+        
+        <div class="prayer-step">
+            <div class="step-title">৯. তাশাহুদ পড়া</div>
+            <div class="step-description">
+                শেষ রাকাআতে "আত্তাহিয়াতু" পড়বেন:
+            </div>
+            <div class="arabic-text">
+                التَّحِيَّاتُ لِلَّهِ وَالصَّلَوَاتُ وَالطَّيِّبَاتُ، السَّلَامُ عَلَيْكَ أَيُّهَا النَّبِيُّ وَرَحْمَةُ اللَّهِ وَبَرَكَاتُهُ، السَّلَامُ عَلَيْنَا وَعَلَى عِبَادِ اللَّهِ الصَّالِحِينَ، أَشْهَدُ أَنْ لَا إِلَهَ إِلَّا اللَّهُ وَأَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ
+            </div>
+            <div class="translation">
+                অর্থ: সকল সম্মান, সকল ইবাদত ও সকল পবিত্রতা আল্লাহর জন্য। হে নবী! আপনার উপর শান্তি বর্ষিত হোক, আল্লাহর রহমত ও তাঁর বারাকাত সমূহ। আমাদের উপর এবং আল্লাহর সকল নেক বান্দাদের উপর শান্তি বর্ষিত হোক। আমি সাক্ষ্য দিচ্ছি যে, আল্লাহ ছাড়া কোনো ইলাহ নেই এবং আমি সাক্ষ্য দিচ্ছি যে, মুহাম্মদ (সা.) তাঁর বান্দা ও রাসূল।
+            </div>
+            <div class="hadith-ref">
+                হাদিস: "নবী (সা.) এভাবে তাশাহুদ পড়তেন।" (সহীহ বুখারী, ۶২৬৫)
+            </div>
+        </div>
+        
+        <div class="prayer-step">
+            <div class="step-title">১০. দুরুদ শরিফ পড়া</div>
+            <div class="arabic-text">
+                اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ، كَمَا صَلَّيْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ، إِنَّكَ حَمِيدٌ مَجِيدٌ، اللَّهُمَّ بَارِكْ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ، كَمَا بَارَكْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ، إِنَّكَ حَمِيدٌ مَجِيدٌ
+            </div>
+            <div class="translation">
+                অর্থ: হে আল্লাহ! মুহাম্মদ (সা.) ও তাঁর পরিবার-পরিজনের উপর রহমত বর্ষণ করুন, যেমন আপনি ইব্রাহীম (আ.) ও তাঁর পরিবার-পরিজনের উপর রহমত বর্ষণ করেছিলেন। নিশ্চয় আপনি প্রশংসিত, মহিমান্বিত। হে আল্লাহ! মুহাম্মদ (সা.) ও তাঁর পরিবার-পরিজনের উপর বরকত দান করুন, যেমন আপনি ইব্রাহীম (আ.) ও তাঁর পরিবার-পরিজনের উপর বরকত দান করেছিলেন। নিশ্চয় আপনি প্রশংসিত, মহিমান্বিত।
+            </div>
+            <div class="hadith-ref">
+                হাদিস: "যে ব্যক্তি আমার উপর একবার দুরুদ পাঠ করবে, আল্লাহ তার উপর দশবার রহমত বর্ষণ করবেন।" (সহীহ মুসলিম, ৪০৮)
+            </div>
+        </div>
+        
+        <div class="prayer-step">
+            <div class="step-title">১১. সালাম দেওয়া (নামাজ শেষ করা)</div>
+            <div class="step-description">
+                প্রথমে ডান দিকে "আসসালামু আলাইকুম ওয়া রহমাতুল্লাহ" বলে তারপর বাম দিকে একইভাবে সালাম ফিরিয়ে নামাজ শেষ করবেন।
+            </div>
+            <div class="arabic-text">
+                السَّلَامُ عَلَيْكُمْ وَرَحْمَةُ اللَّهِ
+            </div>
+            <div class="translation">
+                অর্থ: আপনার উপর শান্তি ও আল্লাহর রহমত বর্ষিত হোক।
+            </div>
+            <div class="hadith-ref">
+                হাদিস: "নবী (সা.) ডান ও বাম দিকে সালাম ফিরিয়ে নামাজ শেষ করতেন।" (সহীহ মুসলিম, ৫৮২)
+            </div>
+        </div>
+        
+        <div class="note-box">
+            <div class="note-title">  বিশেষ নির্দেশনা:</div>
+            <ul>
+                <li>ফরজ নামাজে কিরাআত (কোরআন তিলাওয়াত) নীরবে পড়তে হবে (যোহর, আসর)।</li>
+                <li>সিজদায় নাক, কপাল, দুই হাত, দুই হাঁটু এবং দুই পায়ের আঙ্গুল মাটিতে স্পর্শ করতে হবে।</li>
+                <li>নামাজের মধ্যে অপ্রয়োজনীয় নড়াচড়া করা মাকরূহ (অপছন্দনীয়)।</li>
+                <li>কব্জা বাঁধার সময় ডান হাতের আঙ্গুলগুলো বাম হাতের কব্জায় রাখবেন।</li>
+            </ul>
+        </div>
 
         <div class="video-section">
-            <h3>নামাজ শেখার ভিডিও</h3>
-            <iframe src="https://www.youtube.com/embed/wDuIh2e9Du8?si=3_PwKm7MRqiP_iZD" title="নামাজ শেখার ভিডিও"></iframe>
+            <h3>নামাজ শেখার ভিডিও </h3>
+            <iframe src="https://www.youtube.com/embed/wDuIh2e9Du8?si=3_PwKm7MRqiP_iZD" title="নামাজ শেখার ভিডিও" allowfullscreen></iframe>
         </div>
     </div>
 
-       <footer>
-        © ২০২৪ ইসলামিক সাইট | 
-        <a href=" https://bengeltigerwd.github.io/AL-HIDAYA-WEB-STUDIO-BD/" target="_blank">
-          AL-HIDAYA WEB STUDIO BANGLADESH
-        </a>
+    <footer>
+        © ২০২৪ ইসলামিক গাইড | 
+        <a href="https://bengeltigerwd.github.io/AL-HIDAYA-WEB-STUDIO-BD/" target="_blank">
+            AL-HIDAYA WEB STUDIO BANGLADESH
+        </a> দ্বারা তৈরি
     </footer>
 </body>
 </html>
