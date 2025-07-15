@@ -225,8 +225,8 @@
         © ২০২৪ ইসলামিক সাইট | AL-HIDAYA WEB STUDIO BANGLADESH
     </footer>
 
-    <audio id="azanSound" preload="auto">
-        <source src="Azan.mp3" type="audio/mpeg">
+    <audio id="azanSound" preload="auto" loop>
+        <source src="azan.mp3" type="audio/mpeg">
         <!-- Replace with actual Azan MP3 file -->
     </audio>
 
@@ -287,8 +287,8 @@
                 const times = { fajr, zuhr, asr, maghrib, isha };
                 localStorage.setItem("prayerTimes", JSON.stringify(times));
                 
-                // Schedule background alarms
-                scheduleBackgroundAlarms(times);
+                // Schedule alarms
+                scheduleAlarms(times);
                 
                 showNotification("৫ ওয়াক্ত নামাজের অ্যালার্ম সফলভাবে সেট করা হয়েছে!");
             } else {
@@ -296,34 +296,86 @@
             }
         }
 
-        // Schedule background alarms
-        function scheduleBackgroundAlarms(times) {
-            if ('serviceWorker' in navigator && 'PushManager' in window) {
-                navigator.serviceWorker.ready.then(registration => {
-                    // Clear previous alarms
-                    registration.active.postMessage({type: 'CLEAR_ALARMS'});
-                    
-                    // Schedule new alarms
-                    for (const prayer in times) {
-                        const [hours, minutes] = times[prayer].split(':').map(Number);
-                        const alarmTime = new Date();
-                        alarmTime.setHours(hours);
-                        alarmTime.setMinutes(minutes);
-                        alarmTime.setSeconds(0);
-                        
-                        // If time already passed today, set for tomorrow
-                        if (alarmTime < new Date()) {
-                            alarmTime.setDate(alarmTime.getDate() + 1);
-                        }
-                        
-                        const delay = alarmTime.getTime() - Date.now();
-                        
-                        registration.active.postMessage({
-                            type: 'SET_ALARM',
-                            prayer: prayer,
-                            delay: delay
-                        });
-                    }
+        // Schedule alarms
+        function scheduleAlarms(times) {
+            // Clear any existing alarms
+            clearAllAlarms();
+            
+            // Schedule alarms for each prayer time
+            for (const prayer in times) {
+                const [hours, minutes] = times[prayer].split(':').map(Number);
+                setDailyAlarm(prayer, hours, minutes);
+            }
+        }
+
+        // Set daily alarm for a specific time
+        function setDailyAlarm(prayer, hours, minutes) {
+            const now = new Date();
+            const alarmTime = new Date();
+            
+            alarmTime.setHours(hours);
+            alarmTime.setMinutes(minutes);
+            alarmTime.setSeconds(0);
+            
+            // If the alarm time has already passed today, set it for tomorrow
+            if (alarmTime <= now) {
+                alarmTime.setDate(alarmTime.getDate() + 1);
+            }
+            
+            const timeUntilAlarm = alarmTime.getTime() - now.getTime();
+            
+            // Set timeout for the alarm
+            const alarmId = setTimeout(() => {
+                triggerAlarm(prayer);
+                
+                // Schedule the next day's alarm
+                setDailyAlarm(prayer, hours, minutes);
+            }, timeUntilAlarm);
+            
+            // Store the alarm ID so we can clear it later
+            if (!window.alarmIds) {
+                window.alarmIds = {};
+            }
+            window.alarmIds[prayer] = alarmId;
+        }
+
+        // Clear all alarms
+        function clearAllAlarms() {
+            if (window.alarmIds) {
+                for (const prayer in window.alarmIds) {
+                    clearTimeout(window.alarmIds[prayer]);
+                }
+                window.alarmIds = {};
+            }
+        }
+
+        // Trigger alarm
+        function triggerAlarm(prayer) {
+            const prayerNames = {
+                fajr: "ফজর",
+                zuhr: "জোহর",
+                asr: "আসর",
+                maghrib: "মাগরিব",
+                isha: "ইশা"
+            };
+            
+            const prayerName = prayerNames[prayer];
+            const notificationText = `${prayerName} নামাজের সময় হয়েছে! আযান শুনুন এবং নামাজ আদায় করুন।`;
+            
+            // Show notification
+            showNotification(notificationText);
+            
+            // Play Azan sound
+            const azanSound = document.getElementById("azanSound");
+            azanSound.loop = true;
+            azanSound.play();
+            
+            // Show browser notification if permission is granted
+            if (Notification.permission === 'granted') {
+                new Notification(`${prayerName} নামাজের সময়`, {
+                    body: 'আযান শুনুন এবং নামাজ আদায় করুন',
+                    icon: 'https://i.ibb.co/0jQ7ZqC/islamic-icon.png',
+                    requireInteraction: true
                 });
             }
         }
@@ -339,8 +391,10 @@
             
             if (!isError) {
                 setTimeout(() => {
-                    notification.style.display = "none";
-                }, 3000);
+                    if (notification.style.display === "block") {
+                        notification.style.display = "none";
+                    }
+                }, 5000);
             }
         }
 
@@ -357,93 +411,38 @@
             closeNotification();
         }
 
-        // Check and trigger alarms (for when app is open)
-        function startAlarms() {
-            const times = JSON.parse(localStorage.getItem("prayerTimes"));
-            if (!times) return;
-
-            const azanSound = document.getElementById("azanSound");
-            let alarmActive = false;
-
-            const checkAlarm = () => {
-                const now = new Date();
-                const currentHours = now.getHours();
-                const currentMinutes = now.getMinutes();
-                const currentTime = `${String(currentHours).padStart(2, "0")}:${String(currentMinutes).padStart(2, "0")}`;
-
-                for (const prayer in times) {
-                    if (times[prayer] === currentTime && !alarmActive) {
-                        alarmActive = true;
-                        
-                        // Get prayer name in Bengali
-                        const prayerNames = {
-                            fajr: "ফজর",
-                            zuhr: "জোহর",
-                            asr: "আসর",
-                            maghrib: "মাগরিব",
-                            isha: "ইশা"
-                        };
-                        
-                        const prayerName = prayerNames[prayer];
-                        showNotification(`${prayerName} নামাজের সময় হয়েছে! আযান শুনুন এবং নামাজ আদায় করুন।`);
-                        
-                        // Play Azan sound
-                        azanSound.play();
-                        
-                        // Show browser notification
-                        if (Notification.permission === 'granted') {
-                            new Notification(`${prayerName} নামাজের সময়`, {
-                                body: 'আযান শুনুন এবং নামাজ আদায় করুন',
-                                icon: 'https://i.ibb.co/0jQ7ZqC/islamic-icon.png'
-                            });
-                        }
-                        
-                        // Auto-stop after 3 minutes (180000 ms)
-                        setTimeout(() => {
-                            if (!azanSound.paused) {
-                                stopAzan();
-                            }
-                            alarmActive = false;
-                        }, 180000);
-                    }
-                }
-            };
-
-            // Check every minute
-            setInterval(checkAlarm, 60000);
-            checkAlarm(); // Check immediately on load
-        }
-
         // Initialize
         window.onload = function() {
             loadPrayerTimes();
             updateCurrentTime();
             setInterval(updateCurrentTime, 1000);
-            startAlarms();
             
-            // Check for alarm trigger from service worker
-            navigator.serviceWorker.addEventListener('message', event => {
-                if (event.data.type === 'ALARM_TRIGGERED') {
-                    const prayer = event.data.prayer;
-                    const prayerNames = {
-                        fajr: "ফজর",
-                        zuhr: "জোহর",
-                        asr: "আসর",
-                        maghrib: "মাগরিব",
-                        isha: "ইশা"
-                    };
-                    
-                    // Show notification even if app is closed
-                    if (Notification.permission === 'granted') {
-                        new Notification(`${prayerNames[prayer]} নামাজের সময়`, {
-                            body: 'আযান শুনুন এবং নামাজ আদায় করুন',
-                            icon: 'https://i.ibb.co/0jQ7ZqC/islamic-icon.png',
-                            requireInteraction: true
-                        });
-                    }
-                }
-            });
+            // Check for any alarms that should have triggered while the page was closed
+            checkMissedAlarms();
         };
+
+        // Check for missed alarms
+        function checkMissedAlarms() {
+            const savedTimes = localStorage.getItem("prayerTimes");
+            if (!savedTimes) return;
+
+            const times = JSON.parse(savedTimes);
+            const now = new Date();
+            const currentHours = now.getHours();
+            const currentMinutes = now.getMinutes();
+            const currentTimeInMinutes = currentHours * 60 + currentMinutes;
+
+            for (const prayer in times) {
+                const [hours, minutes] = times[prayer].split(':').map(Number);
+                const prayerTimeInMinutes = hours * 60 + minutes;
+                
+                // If the prayer time was within the last 5 minutes, trigger the alarm
+                if (Math.abs(currentTimeInMinutes - prayerTimeInMinutes) <= 5) {
+                    triggerAlarm(prayer);
+                    break;
+                }
+            }
+        }
     </script>
 </body>
 </html>
