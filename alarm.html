@@ -3,100 +3,279 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>৫ ওয়াক্ত নামাজের অ্যালার্ম</title>
+    <title>৫ ওয়াক্ত নামাজের স্মার্ট অ্যালার্ম</title>
     <style>
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: 'Kalpurush', 'Arial', sans-serif;
             margin: 0;
             padding: 0;
-            background: linear-gradient(to bottom, #f0f4f8, #e6f7f2);
+            background: linear-gradient(to bottom, #e6f7ff, #d1f2eb);
             color: #333;
+            min-height: 100vh;
         }
         header {
-            background: #004d40;
+            background: linear-gradient(135deg, #004d40, #00796b);
             color: white;
             text-align: center;
-            padding: 20px 0;
+            padding: 25px 0;
             font-size: 1.8em;
+            box-shadow: 0 3px 5px rgba(0,0,0,0.1);
+            position: relative;
         }
-        .alarm-section {
-            text-align: center;
-            margin: 30px 0;
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            padding: 12px;
+            background: #00796b;
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
-        .alarm-section table {
-            margin: 0 auto;
-            border-collapse: collapse;
-        }
-        .alarm-section table td {
-            padding: 10px;
-        }
-        .alarm-section table input {
-            padding: 10px;
-            font-size: 1em;
-        }
-        .alarm-section button {
-            background: #004d40;
+        .btn-container a {
+            text-decoration: none;
             color: white;
-            border: none;
+            background: #388e3c;
             padding: 10px 20px;
+            border-radius: 25px;
             font-size: 1em;
             font-weight: bold;
-            cursor: pointer;
-            border-radius: 5px;
-            margin-top: 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
-        .alarm-section button:hover {
-            background: #388e3c;
+        .btn-container a:hover {
+            background: #2e7d32;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .alarm-section {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        h2 {
+            color: #004d40;
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 1.5em;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        table td {
+            padding: 12px 10px;
+            border-bottom: 1px solid #eee;
+            font-size: 1.1em;
+        }
+        table tr:last-child td {
+            border-bottom: none;
+        }
+        input[type="time"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1em;
+            font-family: 'Kalpurush', sans-serif;
+        }
+        button {
+            background: linear-gradient(135deg, #004d40, #00796b);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 30px;
+            display: block;
+            margin: 25px auto 0;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        button:hover {
+            background: linear-gradient(135deg, #00796b, #004d40);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+        .current-time {
+            text-align: center;
+            font-size: 1.2em;
+            margin: 20px 0;
+            color: #00796b;
+            font-weight: bold;
         }
         footer {
-            background: #004d40;
+            background: linear-gradient(135deg, #004d40, #00796b);
             color: white;
             text-align: center;
-            padding: 10px 0;
+            padding: 15px 0;
             font-size: 0.9em;
+            margin-top: 30px;
+        }
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #004d40;
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+            display: none;
+            z-index: 1000;
+            max-width: 300px;
+        }
+        .audio-controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .audio-controls button {
+            margin: 0;
+            padding: 8px 15px;
+            font-size: 0.9em;
+        }
+        .permission-btn {
+            background: #ff9800;
+            margin-bottom: 15px;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 10px;
+            }
+            .alarm-section {
+                padding: 15px;
+            }
+            table td {
+                padding: 8px 5px;
+                font-size: 1em;
+            }
+            .notification {
+                top: 10px;
+                right: 10px;
+                left: 10px;
+                max-width: none;
+            }
         }
     </style>
 </head>
 <body>
     <header>
-        ৫ ওয়াক্ত নামাজের জন্য অ্যালার্ম সিস্টেম
+        ৫ ওয়াক্ত নামাজের স্মার্ট অ্যালার্ম
     </header>
 
-    <div class="alarm-section">
-        <h2>নামাজের সময় নির্ধারণ করুন</h2>
-        <table>
-            <tr>
-                <td>ফজর:</td>
-                <td><input type="time" id="fajr"></td>
-            </tr>
-            <tr>
-                <td>জোহর:</td>
-                <td><input type="time" id="zuhr"></td>
-            </tr>
-            <tr>
-                <td>আসর:</td>
-                <td><input type="time" id="asr"></td>
-            </tr>
-            <tr>
-                <td>মাগরিব:</td>
-                <td><input type="time" id="maghrib"></td>
-            </tr>
-            <tr>
-                <td>ইশা:</td>
-                <td><input type="time" id="isha"></td>
-            </tr>
-        </table>
-        <button onclick="setAlarms()">অ্যালার্ম সেট করুন</button>
+    <div class="btn-container">
+        <a href="javascript:history.back()">পিছনে</a>
+        <a href="index.html">হোম</a>
+    </div>
+
+    <div class="container">
+        <div class="alarm-section">
+            <h2>নামাজের সময় নির্ধারণ করুন</h2>
+            
+            <button class="permission-btn" onclick="requestNotificationPermission()">নোটিফিকেশন পারমিশন দিন</button>
+            
+            <div class="current-time" id="currentTime"></div>
+            
+            <table>
+                <tr>
+                    <td>ফজর:</td>
+                    <td><input type="time" id="fajr"></td>
+                </tr>
+                <tr>
+                    <td>জোহর:</td>
+                    <td><input type="time" id="zuhr"></td>
+                </tr>
+                <tr>
+                    <td>আসর:</td>
+                    <td><input type="time" id="asr"></td>
+                </tr>
+                <tr>
+                    <td>মাগরিব:</td>
+                    <td><input type="time" id="maghrib"></td>
+                </tr>
+                <tr>
+                    <td>ইশা:</td>
+                    <td><input type="time" id="isha"></td>
+                </tr>
+            </table>
+            <button onclick="setAlarms()">অ্যালার্ম সেট করুন</button>
+        </div>
+    </div>
+
+    <div class="notification" id="notification">
+        <div id="notificationText"></div>
+        <div class="audio-controls">
+            <button onclick="stopAzan()">আযান বন্ধ করুন</button>
+            <button onclick="closeNotification()">বন্ধ করুন</button>
+        </div>
     </div>
 
     <footer>
-        © ২০২৪ ইসলামিক সাইট | 
-        AL-HIDAYA WEB STUDIO BANGLADESH
+        © ২০২৪ ইসলামিক সাইট | AL-HIDAYA WEB STUDIO BANGLADESH
     </footer>
 
-    <audio id="alarmSound" src="https://www.soundjay.com/button/beep-07.wav"></audio>
+    <audio id="azanSound" preload="auto">
+        <source src="azan.mp3" type="audio/mpeg">
+        <!-- Replace with actual Azan MP3 file -->
+    </audio>
 
     <script>
+        // Service Worker Registration
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js').then(function(registration) {
+                console.log('ServiceWorker registration successful');
+            }).catch(function(err) {
+                console.log('ServiceWorker registration failed: ', err);
+            });
+        }
+
+        // Load saved prayer times
+        function loadPrayerTimes() {
+            const savedTimes = localStorage.getItem("prayerTimes");
+            if (savedTimes) {
+                const times = JSON.parse(savedTimes);
+                document.getElementById("fajr").value = times.fajr;
+                document.getElementById("zuhr").value = times.zuhr;
+                document.getElementById("asr").value = times.asr;
+                document.getElementById("maghrib").value = times.maghrib;
+                document.getElementById("isha").value = times.isha;
+            }
+        }
+
+        // Update current time display
+        function updateCurrentTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('bn-BD', {
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            document.getElementById("currentTime").textContent = `বর্তমান সময়: ${timeString}`;
+        }
+
+        // Request notification permission
+        function requestNotificationPermission() {
+            Notification.requestPermission().then(permission => {
+                if (permission === 'granted') {
+                    showNotification("নোটিফিকেশন পারমিশন দেওয়া হয়েছে! এখন সাইট বন্ধ থাকলেও অ্যালার্ম কাজ করবে।");
+                } else {
+                    showNotification("নোটিফিকেশন পারমিশন দেওয়া হয়নি। সাইট খোলা থাকলে শুধু তখনই অ্যালার্ম কাজ করবে।", true);
+                }
+            });
+        }
+
+        // Set alarms function
         function setAlarms() {
             const fajr = document.getElementById("fajr").value;
             const zuhr = document.getElementById("zuhr").value;
@@ -107,36 +286,164 @@
             if (fajr && zuhr && asr && maghrib && isha) {
                 const times = { fajr, zuhr, asr, maghrib, isha };
                 localStorage.setItem("prayerTimes", JSON.stringify(times));
-                alert("৫ ওয়াক্ত নামাজের অ্যালার্ম সফলভাবে সেট করা হয়েছে!");
-                startAlarms();
+                
+                // Schedule background alarms
+                scheduleBackgroundAlarms(times);
+                
+                showNotification("৫ ওয়াক্ত নামাজের অ্যালার্ম সফলভাবে সেট করা হয়েছে!");
             } else {
-                alert("অনুগ্রহ করে প্রতিটি নামাজের সময় নির্ধারণ করুন।");
+                showNotification("অনুগ্রহ করে প্রতিটি নামাজের সময় নির্ধারণ করুন।", true);
             }
         }
 
+        // Schedule background alarms
+        function scheduleBackgroundAlarms(times) {
+            if ('serviceWorker' in navigator && 'PushManager' in window) {
+                navigator.serviceWorker.ready.then(registration => {
+                    // Clear previous alarms
+                    registration.active.postMessage({type: 'CLEAR_ALARMS'});
+                    
+                    // Schedule new alarms
+                    for (const prayer in times) {
+                        const [hours, minutes] = times[prayer].split(':').map(Number);
+                        const alarmTime = new Date();
+                        alarmTime.setHours(hours);
+                        alarmTime.setMinutes(minutes);
+                        alarmTime.setSeconds(0);
+                        
+                        // If time already passed today, set for tomorrow
+                        if (alarmTime < new Date()) {
+                            alarmTime.setDate(alarmTime.getDate() + 1);
+                        }
+                        
+                        const delay = alarmTime.getTime() - Date.now();
+                        
+                        registration.active.postMessage({
+                            type: 'SET_ALARM',
+                            prayer: prayer,
+                            delay: delay
+                        });
+                    }
+                });
+            }
+        }
+
+        // Show notification
+        function showNotification(message, isError = false) {
+            const notification = document.getElementById("notification");
+            const notificationText = document.getElementById("notificationText");
+            
+            notification.style.backgroundColor = isError ? "#c62828" : "#004d40";
+            notificationText.textContent = message;
+            notification.style.display = "block";
+            
+            if (!isError) {
+                setTimeout(() => {
+                    notification.style.display = "none";
+                }, 3000);
+            }
+        }
+
+        // Close notification
+        function closeNotification() {
+            document.getElementById("notification").style.display = "none";
+        }
+
+        // Stop Azan
+        function stopAzan() {
+            const azanSound = document.getElementById("azanSound");
+            azanSound.pause();
+            azanSound.currentTime = 0;
+            closeNotification();
+        }
+
+        // Check and trigger alarms (for when app is open)
         function startAlarms() {
             const times = JSON.parse(localStorage.getItem("prayerTimes"));
             if (!times) return;
 
-            const alarmSound = document.getElementById("alarmSound");
+            const azanSound = document.getElementById("azanSound");
+            let alarmActive = false;
 
             const checkAlarm = () => {
                 const now = new Date();
-                const currentTime = `${now.getHours()}:${String(now.getMinutes()).padStart(2, "0")}`;
+                const currentHours = now.getHours();
+                const currentMinutes = now.getMinutes();
+                const currentTime = `${String(currentHours).padStart(2, "0")}:${String(currentMinutes).padStart(2, "0")}`;
 
                 for (const prayer in times) {
-                    if (times[prayer] === currentTime) {
-                        alert(`${prayer} এর সময় হয়েছে! নামাজ আদায় করুন।`);
-                        alarmSound.play();
+                    if (times[prayer] === currentTime && !alarmActive) {
+                        alarmActive = true;
+                        
+                        // Get prayer name in Bengali
+                        const prayerNames = {
+                            fajr: "ফজর",
+                            zuhr: "জোহর",
+                            asr: "আসর",
+                            maghrib: "মাগরিব",
+                            isha: "ইশা"
+                        };
+                        
+                        const prayerName = prayerNames[prayer];
+                        showNotification(`${prayerName} নামাজের সময় হয়েছে! আযান শুনুন এবং নামাজ আদায় করুন।`);
+                        
+                        // Play Azan sound
+                        azanSound.play();
+                        
+                        // Show browser notification
+                        if (Notification.permission === 'granted') {
+                            new Notification(`${prayerName} নামাজের সময়`, {
+                                body: 'আযান শুনুন এবং নামাজ আদায় করুন',
+                                icon: 'https://i.ibb.co/0jQ7ZqC/islamic-icon.png'
+                            });
+                        }
+                        
+                        // Auto-stop after 3 minutes (180000 ms)
+                        setTimeout(() => {
+                            if (!azanSound.paused) {
+                                stopAzan();
+                            }
+                            alarmActive = false;
+                        }, 180000);
                     }
                 }
             };
 
-            setInterval(checkAlarm, 60000); // প্রতি মিনিটে চেক করবে
+            // Check every minute
+            setInterval(checkAlarm, 60000);
+            checkAlarm(); // Check immediately on load
         }
 
-        // পেজ লোড হলে অ্যালার্ম চালু হবে
-        window.onload = startAlarms;
+        // Initialize
+        window.onload = function() {
+            loadPrayerTimes();
+            updateCurrentTime();
+            setInterval(updateCurrentTime, 1000);
+            startAlarms();
+            
+            // Check for alarm trigger from service worker
+            navigator.serviceWorker.addEventListener('message', event => {
+                if (event.data.type === 'ALARM_TRIGGERED') {
+                    const prayer = event.data.prayer;
+                    const prayerNames = {
+                        fajr: "ফজর",
+                        zuhr: "জোহর",
+                        asr: "আসর",
+                        maghrib: "মাগরিব",
+                        isha: "ইশা"
+                    };
+                    
+                    // Show notification even if app is closed
+                    if (Notification.permission === 'granted') {
+                        new Notification(`${prayerNames[prayer]} নামাজের সময়`, {
+                            body: 'আযান শুনুন এবং নামাজ আদায় করুন',
+                            icon: 'https://i.ibb.co/0jQ7ZqC/islamic-icon.png',
+                            requireInteraction: true
+                        });
+                    }
+                }
+            });
+        };
     </script>
 </body>
 </html>
