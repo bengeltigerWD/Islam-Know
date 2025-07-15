@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>প্রতিদিনের দোয়া</title>
+    <style>
+        :root {
+            --primary-color: #004d40;
+            --secondary-color: #00796b;
+            --accent-color: #388e3c;
+            --light-bg: #f0f4f8;
+            --text-color: #333;
+            --white: #ffffff;
+        }
+        
+        body {
+            font-family: 'Kalpurush', 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: var(--light-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--white);
+            text-align: center;
+            padding: 25px 0;
+            font-size: 1.8em;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+        }
+        
+        .btn-container {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 20px;
+            background: var(--secondary-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .btn-container a {
+            text-decoration: none;
+            color: var(--white);
+            background: var(--accent-color);
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 1em;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .btn-container a:hover {
+            background: #2e7d32;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .dua-section {
+            background: var(--white);
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+        }
+        
+        .dua-section:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .dua-title {
+            color: var(--primary-color);
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            font-weight: bold;
+            text-align: center;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 10px;
+        }
+        
+        .dua-arabic {
+            font-size: 1.5em;
+            text-align: right;
+            line-height: 2;
+            margin: 20px 0;
+            color: #2e7d32;
+            font-weight: bold;
+        }
+        
+        .dua-transliteration {
+            font-style: italic;
+            color: #555;
+            margin: 15px 0;
+            padding: 10px;
+            background: #f5f5f5;
+            border-radius: 5px;
+        }
+        
+        .dua-meaning {
+            margin: 15px 0;
+            line-height: 1.7;
+        }
+        
+        .dua-reference {
+            font-size: 0.9em;
+            color: #666;
+            text-align: right;
+            font-style: italic;
+            margin-top: 15px;
+        }
+        
+        .time-tag {
+            display: inline-block;
+            background: var(--accent-color);
+            color: white;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            margin-right: 5px;
+        }
+        
+        .search-section {
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        .search-box {
+            position: relative;
+            display: inline-block;
+            width: 80%;
+            max-width: 600px;
+        }
+        
+        .search-box input[type="text"] {
+            width: 100%;
+            padding: 12px 20px;
+            font-size: 1.1em;
+            border: 2px solid #ddd;
+            border-radius: 30px;
+            outline: none;
+            transition: all 0.3s;
+            font-family: 'Kalpurush', sans-serif;
+        }
+        
+        .search-box input[type="text"]:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 10px rgba(56, 142, 60, 0.2);
+        }
+        
+        .search-box button {
+            position: absolute;
+            right: 5px;
+            top: 5px;
+            background: var(--accent-color);
+            color: var(--white);
+            border: none;
+            padding: 7px 15px;
+            font-size: 1em;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .search-box button:hover {
+            background: #2e7d32;
+        }
+        
+        .category-filter {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .category-btn {
+            background: #e0e0e0;
+            color: var(--text-color);
+            border: none;
+            padding: 8px 15px;
+            margin: 5px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .category-btn.active, .category-btn:hover {
+            background: var(--accent-color);
+            color: var(--white);
+        }
+        
+        footer {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--white);
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 50px;
+        }
+        
+        .footer-link {
+            color: #ffcc00;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .footer-link:hover {
+            text-decoration: underline;
+            color: #ffd700;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .search-box {
+                width: 90%;
+            }
+            
+            .dua-section {
+                padding: 15px;
+            }
+            
+            .dua-arabic {
+                font-size: 1.3em;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <i class="fas fa-hands-praying"></i> প্রতিদিনের দোয়া
+    </header>
+
+    <div class="btn-container">
+        <a href="javascript:history.back()"><i class="fas fa-arrow-left"></i> পিছনে</a>
+        <a href="index.html"><i class="fas fa-home"></i> হোম</a>
+    </div>
+
+    <div class="container">
+        <div class="search-section">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="দোয়া খুঁজুন...">
+                <button onclick="searchDuas()"><i class="fas fa-search"></i> খুঁজুন</button>
+            </div>
+        </div>
+
+        <div class="category-filter">
+            <button class="category-btn active" onclick="filterDuas('all')">সব</button>
+            <button class="category-btn" onclick="filterDuas('morning')">সকাল</button>
+            <button class="category-btn" onclick="filterDuas('evening')">সন্ধ্যা</button>
+            <button class="category-btn" onclick="filterDuas('sleep')">ঘুম</button>
+            <button class="category-btn" onclick="filterDuas('eating')">খাবার</button>
+            <button class="category-btn" onclick="filterDuas('prayer')">নামাজ</button>
+            <button class="category-btn" onclick="filterDuas('home')">ঘর-বাড়ি</button>
+            <button class="category-btn" onclick="filterDuas('travel')">যাত্রা</button>
+            <button class="category-btn" onclick="filterDuas('health')">স্বাস্থ্য</button>
+        </div>
+
+        <!-- Morning Duas -->
+        <div class="dua-section" data-category="morning">
+            <div class="dua-title">
+                <span class="time-tag">সকাল</span> ঘুম থেকে উঠার দোয়া
+            </div>
+            <div class="dua-arabic">
+                الْحَمْدُ لِلَّهِ الَّذِي أَحْيَانَا بَعْدَ مَا أَمَاتَنَا وَإِلَيْهِ النُّشُورُ
+            </div>
+            <div class="dua-transliteration">
+                "আলহামদু লিল্লাহিল্লাজি আহইয়ানা বা'দা মা আমাতানা ওয়া ইলাইহিন নুশুর।"
+            </div>
+            <div class="dua-meaning">
+                সমস্ত প্রশংসা আল্লাহর জন্য যিনি আমাদের মৃত্যুর পর জীবিত করেছেন এবং তাঁর কাছেই পুনরুত্থান।
+            </div>
+            <div class="dua-reference">
+                সহীহ বুখারী, হাদীস নং ৬৩১২
+            </div>
+        </div>
+
+        <div class="dua-section" data-category="morning">
+            <div class="dua-title">
+                <span class="time-tag">সকাল</span> সকালের দোয়া
+            </div>
+            <div class="dua-arabic">
+                أَصْبَحْنَا وَأَصْبَحَ الْمُلْكُ لِلَّهِ، وَالْحَمْدُ لِلَّهِ، لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ
+            </div>
+            <div class="dua-transliteration">
+                "আসবাহনা ওয়া আসবাহাল মূলকু লিল্লাহি, ওয়াল হামদু লিল্লাহি, লা ইলাহা ইল্লাল্লাহু ওয়াহদাহু লা শারীকা লাহু।"
+            </div>
+            <div class="dua-meaning">
+                আমরা সকালে উপনীত হলাম এবং সমস্ত রাজত্ব আল্লাহর জন্য, সমস্ত প্রশংসা আল্লাহর জন্য। তিনি ছাড়া কোনো ইলাহ নেই, তিনি একক, তাঁর কোনো শরীক নেই।
+            </div>
+            <div class="dua-reference">
+                মুসলিম, হাদীস নং ২৭২৩
+            </div>
+        </div>
+
+        <div class="dua-section" data-category="morning">
+            <div class="dua-title">
+                <span class="time-tag">সকাল</span> সকালে পড়ার বিশেষ দোয়া
+            </div>
+            <div class="dua-arabic">
+                اللَّهُمَّ بِكَ أَصْبَحْنَا، وَبِكَ أَمْسَيْنَا، وَبِكَ نَحْيَا، وَبِكَ نَمُوتُ، وَإِلَيْكَ النُّشُورُ
+            </div>
+            <div class="dua-transliteration">
+                "আল্লাহুম্মা বিহা আসবাহনা, ওয়া বিহা আমসাইনা, ওয়া বিহা নাহইয়া, ওয়া বিহা নামুতু, ওয়া ইলাইকান নুশুর।"
+            </div>
+            <div class="dua-meaning">
+                হে আল্লাহ! তোমারই অনুগ্রহে আমরা সকালে উপনীত হয়েছি, তোমারই অনুগ্রহে আমরা সন্ধ্যায় উপনীত হই, তোমারই অনুগ্রহে আমরা বাঁচি, তোমারই অনুগ্রহে আমরা মরি এবং তোমার কাছেই পুনরুত্থান।
+            </div>
+            <div class="dua-reference">
+                তিরমিযী, হাদীস নং ৩৩৯১
+            </div>
+        </div>
+
+        <!-- Evening Duas -->
+        <div class="dua-section" data-category="evening">
+            <div class="dua-title">
+                <span class="time-tag">সন্ধ্যা</span> সন্ধ্যার দোয়া
+            </div>
+            <div class="dua-arabic">
+                أَمْسَيْنَا وَأَمْسَى الْمُلْكُ لِلَّهِ، وَالْحَمْدُ لِلَّهِ، لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ
+            </div>
+            <div class="dua-transliteration">
+                "আমসাইনা ওয়া আমসাল মূলকু লিল্লাহি, ওয়াল হামদু লিল্লাহি, লা ইলাহা ইল্লাল্লাহু ওয়াহদাহু লা শারীকা লাহু।"
+            </div>
+            <div class="dua-meaning">
+                আমরা সন্ধ্যায় উপনীত হলাম এবং সমস্ত রাজত্ব আল্লাহর জন্য, সমস্ত প্রশংসা আল্লাহর জন্য। তিনি ছাড়া কোনো ইলাহ নেই, তিনি একক, তাঁর কোনো শরীক নেই।
+            </div>
+            <div class="dua-reference">
+                মুসলিম, হাদীস নং ২৭২৩
+            </div>
+        </div>
+
+        <div class="dua-section" data-category="evening">
+            <div class="dua-title">
+                <span class="time-tag">সন্ধ্যা</span> সন্ধ্যায় পড়ার বিশেষ দোয়া
+            </div>
+            <div class="dua-arabic">
+                اللَّهُمَّ بِكَ أَمْسَيْنَا، وَبِكَ أَصْبَحْنَا، وَبِكَ نَحْيَا، وَبِكَ نَمُوتُ، وَإِلَيْكَ الْمَصِيرُ
+            </div>
+            <div class="dua-transliteration">
+                "আল্লাহুম্মা বিহা আমসাইনা, ওয়া বিহা আসবাহনা, ওয়া বিহা নাহইয়া, ওয়া বিহা নামুতু, ওয়া ইলাইকাল মাসির।"
+            </div>
+            <div class="dua-meaning">
+                হে আল্লাহ! তোমারই অনুগ্রহে আমরা সন্ধ্যায় উপনীত হয়েছি, তোমারই অনুগ্রহে আমরা সকালে উপনীত হই, তোমারই অনুগ্রহে আমরা বাঁচি, তোমারই অনুগ্রহে আমরা মরি এবং তোমার কাছেই প্রত্যাবর্তন।
+            </div>
+            <div class="dua-reference">
+                তিরমিযী, হাদীস নং ৩৩৯১
+            </div>
+        </div>
+
+        <!-- Sleep Duas -->
+        <div class="dua-section" data-category="sleep">
+            <div class="dua-title">
+                <span class="time-tag">ঘুম</span> ঘুমানোর আগের দোয়া
+            </div>
+            <div class="dua-arabic">
+                بِاسْمِكَ اللَّهُمَّ أَمُوتُ وَأَحْيَا
+            </div>
+            <div class="dua-transliteration">
+                "বিসমিকা আল্লাহুম্মা আমুতু ওয়া আহইয়া।"
+            </div>
+            <div class="dua-meaning">
+                হে আল্লাহ! তোমার নামে আমি মৃত্যুবরণ করি এবং জীবন লাভ করি।
+            </div>
+            <div class="dua-reference">
+                বুখারী, হাদীস নং ৬৩২৪
+            </div>
+        </div>
+
+        <div class="dua-section" data-category="sleep">
+            <div class="dua-title">
+                <span class="time-tag">ঘুম</span> ঘুমানোর সময়ের দোয়া
+            </div>
+            <div class="dua-arabic">
+                اللَّهُمَّ قِنِي عَذَابَكَ يَوْمَ تَبْعَثُ عِبَادَكَ
+            </div>
+            <div class="dua-transliteration">
+                "আল্লাহুম্মা ক্বিনি আজাবাকা ইয়াওমা তাব'আছু ইবাদাক।"
+            </div>
+            <div class="dua-meaning">
+                হে আল্লাহ! তোমার বান্দাদেরকে পুনরুত্থিত করার দিন তোমার শাস্তি থেকে আমাকে রক্ষা করো।
+            </div>
+            <div class="dua-reference">
+                আবু দাউদ, হাদীস নং ৫০৪৫
+            </div>
+        </div>
+
+        <div class="dua-section" data-category="sleep">
+            <div class="dua-title">
+                <span class="time-tag">ঘুম</span> বিছানায় শোয়ার সময়ের দোয়া
+            </div>
+            <div class="dua-arabic">
+                اللَّهُمَّ خَلَقْتَ نَفْسِي وَأَنْتَ تَوَفَّاهَا، لَكَ مَمَاتُهَا وَمَحْيَاهَا، إِنْ أَحْيَيْتَهَا فَاحْفَظْهَا، وَإِنْ أَمَتَّهَا فَاغْفِرْ لَهَا، اللَّهُمَّ إِنِّي أَسْأَلُكَ الْعَافِيَةَ
+            </div>
+            <div class="dua-transliteration">
+                "আল্লাহুম্মা খালাকতা নাফসি ওয়া আনতা তাওয়াফফাহা, লাকা মামাতুহা ওয়া মাহইয়াহা, ইন আহইয়াইতাহা ফাহফাজহা, ওয়া ইন আমাত্তাহা ফাগফির লাহা, আল্লাহুম্মা ইন্নি আসআলুকাল আফিয়া।"
+            </div>
+            <div class="dua-meaning">
+                হে আল্লাহ! তুমিই আমার রূহ সৃষ্টি করেছ এবং তুমিই তা কবজ করবে। তার মৃত্যু ও জীবন তোমারই হাতে। যদি তুমি তাকে জীবিত রাখ তবে তাকে হিফাজত করো, আর যদি তুমি তাকে মৃত্যু দান কর তবে তাকে ক্ষমা করো। হে আল্লাহ! আমি তোমার কাছে সুস্থতা চাই।
+            </div>
+            <div class="dua-reference">
+                মুসলিম, হাদীস নং ২৭১২
+            </div>
+        </div>
+
+        <!-- Eating Duas -->
+        <div class="dua-section" data-category="eating">
+            <div class="dua-title">
+                <span class="time-tag">খাবার</span> খাবার শুরু করার দোয়া
+            </div>
+            <div class="dua-arabic">
+                بِسْمِ اللَّهِ وَعَلَى بَرَكَةِ اللَّهِ
+            </div>
+            <div class="dua-transliteration">
+                "বিসমিল্লাহি ওয়া আলা বারাকাতিল্লাহি।"
+            </div>
+            <div class="dua-meaning">
+                আল্লাহর নামে শুরু করছি এবং আল্লাহর বরকতের উপর।
+            </div>
+            <div class="dua-reference">
+                আবু দাউদ, হাদীস নং ৩৭৬৭
+            </div>
+        </div>
+
+        <div class="dua-section" data-category="eating">
+            <div class="dua-title">
+                <span class="time-tag">খাবার</span> খাবার শেষের দোয়া
+            </div>
+            <div class="dua-arabic">
+                الْحَمْدُ لِلَّهِ الَّذِي أَطْعَمَنَا وَسَقَانَا وَجَعَلَنَا مُسْلِمِينَ
+            </div>
+            <div class="dua-transliteration">
+                "আলহামদু লিল্লাহিল্লাজি আত'আমানা ওয়া সাকানা ওয়া জা'আলানা মুসলিমিন।"
+            </div>
+            <div class="dua-meaning">
+                সমস্ত প্রশংসা আল্লাহর জন্য যিনি আমাদের খাওয়ালেন, পান করালেন এবং আমাদের মুসলিম বানালেন।
+            </div>
+            <div class="dua-reference">
+                আবু দাউদ, হাদীস নং ৩৮৫০
+            </div>
+        </div>
+
+        <div class="dua-section" data-category="eating">
+            <div class="dua-title">
+                <span class="time-tag">খাবার</span> খাবার পরে পড়ার দোয়া
+            </div>
+            <div class="dua-arabic">
+                الْحَمْدُ لِلَّهِ حَمْدًا كَثِيرًا طَيِّبًا مُبَارَكًا فِيهِ، غَيْرَ مَكْفِيٍّ وَلَا مُوَدَّعٍ وَلَا مُسْتَغْنًى عَنْهُ رَبَّنَا
+            </div>
+            <div class="dua-transliteration">
+                "আলহামদু লিল্লাহি হামদান কাসিরান তাইয়িবান মুবারাকান ফিহি, গাইরা মাকফিয়্যিওঁ ওয়া লা মুয়াদ্দায়িওঁ ওয়া লা মুসতাগনান আনহু রাব্বানা।"
+            </div>
+            <div class="dua-meaning">
+                সমস্ত প্রশংসা আল্লাহর জন্য, অধিক প্রশংসা, পবিত্র প্রশংসা ও বরকতময় প্রশংসা, যা অপর্যাপ্ত নয়, পরিত্যক্ত নয় এবং যার থেকে আমরা বেপরোয়া নই, হে আমাদের রব!
+            </div>
+            <div class="dua-reference">
+                বুখারী, হাদীস নং ৫৪৫৮
+            </div>
+        </div>
+
+        <!-- Prayer Duas -->
+        <div class="dua-section" data-category="prayer">
+            <div class="dua-title">
+                <span class="time-tag">নামাজ</span> নামাজের পরের দোয়া
+            </div>
+            <div class="dua-arabic">
+                أَسْتَغْفِرُ اللَّهَ (ثلاثاً) اللَّهُمَّ أَنْتَ السَّلَامُ وَمِنْكَ السَّلَامُ تَبَارَكْتَ يَا ذَا الْجَلَالِ وَالْإِكْرَامِ
+            </div>
+            <div class="dua-transliteration">
+                "আস্তাগফিরুল্লাহ (৩ বার), আল্লাহুম্মা আনতাস সালামু ওয়া মিনকাস সালামু, তাবারাকতা ইয়া জাল জালালি ওয়াল ইকরাম।"
+            </div>
+            <div class="dua-meaning">
+                আমি আল্লাহর কাছে ক্ষমা প্রার্থনা করছি (৩ বার)। হে আল্লাহ! তুমিই শান্তি এবং তোমার কাছ থেকেই শান্তি। হে মহিমান্বিত ও সম্মানিত আল্লাহ! তুমি বরকতময়।
+            </div>
+            <div class="dua-reference">
+                মুসলিম, হাদীস নং ৫৯১
+            </div>
+        </div>
+
+        <div class="dua-section" data-category="prayer">
+            <div class="dua-title">
+                <span class="time-tag">নামাজ</span> রুকু থেকে উঠার পরের দোয়া
+            </div>
+            <div class="dua-arabic">
+                سَمِعَ اللَّهُ لِمَنْ حَمِدَهُ، رَبَّنَا وَلَكَ الْحَمْدُ
+            </div>
+            <div class="dua-transliteration">
+                "সামি'আল্লাহু লিমান হামিদাহ, রাব্বানা ওয়া লাকাল হামদু।"
+            </div>
+            <div class="dua-meaning">
+                আল্লাহ তার প্রশংসা শুনেছেন যে তার প্রশংসা করেছে। হে আমাদের রব! তোমারই সকল প্রশংসা।
+            </div>
+            <div class="dua-reference">
+                বুখারী, হাদীস নং ৭৯৫
+            </div>
+        </div>
+
+        <div class="dua-section" data-category="prayer">
+            <div class="dua-title">
+                <span class="time-tag">নামাজ</span> তাশাহহুদে পড়ার দোয়া
+            </div>
+            <div class="dua-arabic">
+                اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ، كَمَا صَلَّيْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ، إِنَّكَ حَمِيدٌ مَجِيدٌ، اللَّهُمَّ بَارِكْ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ، كَمَا بَارَكْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ، إِنَّكَ حَمِيدٌ مَجِيدٌ
+            </div>
+            <div class="dua-transliteration">
+                "আল্লাহুম্মা সাল্লি আলা মুহাম্মাদিওঁ ওয়া আলা আলি মুহাম্মাদ, কামা সাল্লাইতা আলা ইব্রাহিমা ওয়া আলা আলি ইব্রাহিম, ইন্নাকা হামিদুম মাজিদ। আল্লাহুম্মা বারিক আলা মুহাম্মাদিওঁ ওয়া আলা আলি মুহাম্মাদ, কামা বারাকতা আলা ইব্রাহিমা ওয়া আলা আলি ইব্রাহিম, ইন্নাকা হামিদুম মাজিদ।"
+            </div>
+            <div class="dua-meaning">
+                হে আল্লাহ! মুহাম্মদ ও তাঁর পরিবারবর্গের উপর রহমত বর্ষণ করুন, যেমন আপনি ইব্রাহিম ও তাঁর পরিবারবর্গের উপর রহমত বর্ষণ করেছেন। নিশ্চয় আপনি প্রশংসিত, মহিমান্বিত। হে আল্লাহ! মুহাম্মদ ও তাঁর পরিবারবর্গের উপর বরকত দান করুন, যেমন আপনি ইব্রাহিম ও তাঁর পরিবারবর্গের উপর বরকত দান করেছেন। নিশ্চয় আপনি প্রশংসিত, মহিমান্বিত।
+            </div>
+            <div class="dua-reference">
+                বুখারী, হাদীস নং ৩৩৭০
+            </div>
+        </div>
+
+        <!-- Home Duas -->
+        <div class="dua-section" data-category="home">
+            <div class="dua-title">
+                <span class="time-tag">ঘর-বাড়ি</span> বাড়িতে প্রবেশের দোয়া
+            </div>
+            <div class="dua-arabic">
+                اللَّهُمَّ إِنِّي أَسْأَلُكَ خَيْرَ الْمَوْلِجِ وَخَيْرَ الْمَخْرَجِ، بِسْمِ اللَّهِ وَلَجْنَا، وَبِسْمِ اللَّهِ خَرَجْنَا، وَعَلَى اللَّهِ رَبِّنَا تَوَكَّلْنَا
+            </div>
+            <div class="dua-transliteration">
+                "আল্লাহুম্মা ইন্নি আসআলুকা খাইরাল মাওলিজি ওয়া খাইরাল মাখরাজি, বিসমিল্লাহি ওয়ালাজনা, ওয়া বিসমিল্লাহি খারাজনা, ওয়া আলাল্লাহি রাব্বিনা তাওয়াক্কালনা।"
+            </div>
+            <div class="dua-meaning">
+                হে আল্লাহ! আমি আপনার কাছে প্রবেশের উত্তম স্থান ও বের হওয়ার উত্তম স্থান চাই। আল্লাহর নামে আমরা প্রবেশ করলাম এবং আল্লাহর নামেই বের হলাম, আর আমাদের রব আল্লাহর উপরই আমরা ভরসা করলাম।
+            </div>
+            <div class="dua-reference">
+                আবু দাউদ, হাদীস নং ৫০৯৬
+            </div>
+        </div>
+
+        <div class="dua-section" data-category="home">
+            <div class="dua-title">
+                <span class="time-tag">ঘর-বাড়ি</span> বাড়ি থেকে বের হওয়ার দোয়া
+            </div>
+            <div class="dua-arabic">
+                بِسْمِ اللَّهِ، تَوَكَّلْتُ عَلَى اللَّهِ، لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ
+            </div>
+            <div class="dua-transliteration">
+                "বিসমিল্লাহি, তাওয়াক্কালতু আলাল্লাহি, লা হাওলা ওয়া লা কুওয়াতা ইল্লা বিল্লাহ।"
+            </div>
+            <div class="dua-meaning">
+                আল্লাহর নামে, আমি আল্লাহর উপর ভরসা করলাম। আল্লাহ ছাড়া কোনো শক্তি ও ক্ষমতা নেই।
+            </div>
+            <div class="dua-reference">
+                তিরমিযী, হাদীস নং ৩৪২৬
+            </div>
+        </div>
+
+        <div class="dua-section" data-category="home">
+            <div class="dua-title">
+                <span class="time-tag">ঘর-বাড়ি</span> নতুন বাড়িতে প্রবেশের দোয়া
+            </div>
+            <div class="dua-arabic">
+                أَعُوذُ بِكَلِمَاتِ اللَّهِ التَّامَّاتِ مِنْ شَرِّ مَا خَلَقَ
+            </div>
+            <div class="dua-transliteration">
+                "আউজু বিকালিমাতিল্লাহিত তাম্মাতি মিন শাররি মা খালাক।"
+            </div>
+            <div class="dua-meaning">
+                আমি আল্লাহর পরিপূর্ণ কালিমাসমূহের আশ্রয় নিচ্ছি তাঁর সৃষ্টির অনিষ্ট থেকে।
+            </div>
+            <div class="dua-reference">
+                মুসলিম, হাদীস নং ২৭০৮
+            </div>
+        </div>
+
+        <!-- Travel Duas -->
+        <div class="dua-section" data-category="travel">
+            <div class="dua-title">
+                <span class="time-tag">যাত্রা</span> যাত্রা শুরু করার দোয়া
+            </div>
+            <div class="dua-arabic">
+                سُبْحَانَ الَّذِي سَخَّرَ لَنَا هَذَا وَمَا كُنَّا لَهُ مُقْرِنِينَ، وَإِنَّا إِلَى رَبِّنَا لَمُنْقَلِبُونَ
+            </div>
+            <div class="dua-transliteration">
+                "সুবহানাল্লাজি সাখখারা লানা হাজা ওয়া মা কুননা লাহু মুকরিনিন, ওয়া ইন্না ইলা রাব্বিনা লামুনকালিবুন।"
+            </div>
+            <div class="dua-meaning">
+                পবিত্র তিনি যিনি আমাদের জন্য এটা (যানবাহন) নিয়ন্ত্রিত করেছেন, অথচ আমরা এর নিয়ন্ত্রণে সক্ষম ছিলাম না। আর নিশ্চয় আমরা আমাদের রবের দিকেই ফিরে যাব।
+            </div>
+            <div class="dua-reference">
+                মুসলিম, হাদীস নং ১৩৪২
+            </div>
+        </div>
+
+        <div class="dua-section" data-category="travel">
+            <div class="dua-title">
+                <span class="time-tag">যাত্রা</span> সফরে থাকাকালীন দোয়া
+            </div>
+            <div class="dua-arabic">
+                اللَّهُمَّ هَوِّنْ عَلَيْنَا سَفَرَنَا هَذَا وَاطْوِ عَنَّا بُعْدَهُ، اللَّهُمَّ أَنْتَ الصَّاحِبُ فِي السَّفَرِ وَالْخَلِيفَةُ فِي الْأَهْلِ
+            </div>
+            <div class="dua-transliteration">
+                "আল্লাহুম্মা হাওয়িউ আলাইনা সাফারানা হাজা ওয়াত্বুি আন্না বু'দাহু, আল্লাহুম্মা আনতাস সাহিবু ফিস সাফারি ওয়াল খালিফাতু ফিল আহলি।"
+            </div>
+            <div class="dua-meaning">
+                হে আল্লাহ! আমাদের এই সফর সহজ করে দাও এবং এর দূরত্ব সংক্ষিপ্ত করে দাও। হে আল্লাহ! তুমিই সফরের সাথী এবং পরিবারের তত্ত্বাবধায়ক।
+            </div>
+            <div class="dua-reference">
+                মুসলিম, হাদীস নং ১৩৪২
+            </div>
+        </div>
+
+        <div class="dua-section" data-category="travel">
+            <div class="dua-title">
+                <span class="time-tag">যাত্রা</span> সফর থেকে ফেরার দোয়া
+            </div>
+            <div class="dua-arabic">
+                آيِبُونَ تَائِبُونَ عَابِدُونَ لِرَبِّنَا حَامِدُونَ
+            </div>
+            <div class="dua-transliteration">
+                "আয়িবুনা, তা'ইবুনা, আবিদুনা, লি রাব্বিনা হামিদুন।"
+            </div>
+            <div class="dua-meaning">
+                আমরা ফিরছি, তওবাকারী, ইবাদতকারী এবং আমাদের রবের প্রশংসাকারী।
+            </div>
+            <div class="dua-reference">
+                বুখারী, হাদীস নং ৩০৮৪
+            </div>
+        </div>
+
+        <!-- Health Duas -->
+        <div class="dua-section" data-category="health">
+            <div class="dua-title">
+                <span class="time-tag">স্বাস্থ্য</span> অসুস্থ অবস্থায় পড়ার দোয়া
+            </div>
+            <div class="dua-arabic">
+                اللَّهُمَّ رَبَّ النَّاسِ، أَذْهِبِ الْبَأْسَ، اشْفِ أَنْتَ الشَّافِي، لَا شِفَاءَ إِلَّا شِفَاؤُكَ، شِفَاءً لَا يُغَادِرُ سَقَمًا
+            </div>
+            <div class="dua-transliteration">
+                "আল্লাহুম্মা রাব্বান নাসি, আজহিবিল বা'সা, ইশফি আনতাশ শাফি, লা শিফাআ ইল্লা শিফাউকা, শিফাআন লা ইউগাদিরু সাকামা।"
+            </div>
+            <div class="dua-meaning">
+                হে আল্লাহ! মানুষদের রব! কষ্ট দূর করো, আরোগ্য দান করো, তুমিই আরোগ্য দানকারী। তোমার আরোগ্য ছাড়া কোনো আরোগ্য নেই, এমন আরোগ্য দান করো যাতে কোনো রোগ অবশিষ্ট না থাকে।
+            </div>
+            <div class="dua-reference">
+                বুখারী, হাদীস নং ৫৭৪২
+            </div>
+        </div>
+
+        <div class="dua-section" data-category="health">
+            <div class="dua-title">
+                <span class="time-tag">স্বাস্থ্য</span> রোগমুক্তির দোয়া
+            </div>
+            <div class="dua-arabic">
+                أَسْأَلُ اللَّهَ الْعَظِيمَ رَبَّ الْعَرْشِ الْعَظِيمِ أَنْ يَشْفِيَكَ
+            </div>
+            <div class="dua-transliteration">
+                "আসআলুল্লাহাল আজিম, রাব্বাল আরশিল আজিম, আইয়াইশফিকা।"
+            </div>
+            <div class="dua-meaning">
+                আমি মহান আল্লাহর কাছে, মহান আরশের রবের কাছে প্রার্থনা করছি যেন তিনি তোমাকে সুস্থ করে দেন।
+            </div>
+            <div class="dua-reference">
+                তিরমিযী, হাদীস নং ২০৮৩
+            </div>
+        </div>
+
+        <div class="dua-section" data-category="health">
+            <div class="dua-title">
+                <span class="time-tag">স্বাস্থ্য</span> ব্যথা-বেদনা থেকে মুক্তির দোয়া
+            </div>
+            <div class="dua-arabic">
+                ضَعْ يَدَكَ عَلَى الَّذِي تَأَلَّمَ مِنْ جَسَدِكَ، وَقُلْ بِاسْمِ اللَّهِ ثَلَاثًا، وَقُلْ سَبْعَ مَرَّاتٍ أَعُوذُ بِاللَّهِ وَقُدْرَتِهِ مِنْ شَرِّ مَا أَجِدُ وَأُحَاذِرُ
+            </div>
+            <div class="dua-transliteration">
+                "দা' ইয়াদাকা আলাল্লাজি তা'ল্লামা মিন জাসাদিকা, ওয়া কুল বিসমিল্লাহি (৩ বার), ওয়া কুল সাব'আ মাররাতিন আউজু বিল্লাহি ওয়া কুদরাতিহি মিন শাররি মা আজিদু ওয়া উহাজিরু।"
+            </div>
+            <div class="dua-meaning">
+                তোমার হাত তোমার শরীরের যে স্থানে ব্যথা রয়েছে সেখানে রাখো এবং তিনবার "বিসমিল্লাহ" বলো, তারপর সাতবার বলো: "আমি আল্লাহ ও তাঁর ক্ষমতার আশ্রয় নিচ্ছি, এই ব্যথা ও যা থেকে আমি আশঙ্কা করি তার অনিষ্ট থেকে।"
+            </div>
+            <div class="dua-reference">
+                মুসলিম, হাদীস নং ২২০২
+            </div>
+        </div>
+
+        <!-- Additional Important Duas -->
+        <div class="dua-section" data-category="morning">
+            <div class="dua-title">
+                <span class="time-tag">সকাল</span> সকালে আয়াতুল কুরসি পড়ার ফজিলত
+            </div>
+            <div class="dua-arabic">
+                اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ ۚ لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ ۚ لَّهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ ۗ مَن ذَا الَّذِي يَشْفَعُ عِندَهُ إِلَّا بِإِذْنِهِ ۚ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ ۖ وَلَا يُحِيطُونَ بِشَيْءٍ مِّنْ عِلْمِهِ إِلَّا بِمَا شَاءَ ۚ وَسِعَ كُرْسِيُّهُ السَّمَاوَاتِ وَالْأَرْضَ ۖ وَلَا يَئُودُهُ حِفْظُهُمَا ۚ وَهُوَ الْعَلِيُّ الْعَظِيمُ
+            </div>
+            <div class="dua-transliteration">
+                "আল্লাহু লা ইলাহা ইল্লা হুওয়াল হাইয়ুল কাইয়্যুম, লা তা'খুজুহু সিনাতুওঁ ওয়া লা নাউম, লাহু মা ফিস সামাওয়াতি ওয়া মা ফিল আরদ, মান জাল্লাজি ইয়াশফাউ ইন্দাহু ইল্লা বিইজনিহ, ইয়া'লামু মা বাইনা আইদিহিম ওয়া মা খালফাহুম, ওয়া লা ইউহিতুনা বিশাইয়িম মিন ইলমিহি ইল্লা বিমা শাআ, ওয়াসিয়া কুরসিইয়্যুহুস সামাওয়াতি ওয়াল আরদ, ওয়া লা ইয়াউদুহু হিফজুহুমা, ওয়া হুওয়াল আলিয়্যুল আজিম।"
+            </div>
+            <div class="dua-meaning">
+                আল্লাহ, তিনি ছাড়া কোনো ইলাহ নেই, তিনি চিরঞ্জীব, সবকিছুর ধারক। তাঁকে তন্দ্রাও স্পর্শ করে না এবং নিদ্রাও নয়। আসমান ও জমিনে যা কিছু আছে সবই তাঁর। কে আছ এমন যে তাঁর অনুমতি ছাড়া তাঁর কাছে সুপারিশ করবে? তিনি জানেন তাদের সামনে ও পিছনে যা কিছু আছে। আর তাঁর জ্ঞান থেকে তারা কোনো কিছুই পরিবেষ্টিত করতে পারে না, কিন্তু যতটুকু তিনি ইচ্ছা করেন। তাঁর কুরসি আসমান ও জমিনকে পরিবেষ্টিত করে আছে। আর সেগুলোকে ধারণ করা তাঁর জন্য কঠিন নয়। তিনি সর্বোচ্চ ও সর্বাপেক্ষা মহান।
+            </div>
+            <div class="dua-reference">
+                সূরা বাকারা, আয়াত ২৫৫
+            </div>
+        </div>
+
+        <div class="dua-section" data-category="morning">
+            <div class="dua-title">
+                <span class="time-tag">সকাল</span> সকালে সূরা ইখলাস, ফালাক ও নাস পড়ার ফজিলত
+            </div>
+            <div class="dua-arabic">
+                قُلْ هُوَ اللَّهُ أَحَدٌ ﴿١﴾ اللَّهُ الصَّمَدُ ﴿٢﴾ لَمْ يَلِدْ وَلَمْ يُولَدْ ﴿٣﴾ وَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ ﴿٤﴾
+            </div>
+            <div class="dua-transliteration">
+                "কুল হুওয়াল্লাহু আহাদ, আল্লাহুস সামাদ, লাম ইয়ালিদ ওয়া লাম ইউলাদ, ওয়া লাম ইয়াকুল্লাহু কুফুওয়ান আহাদ।"
+            </div>
+            <div class="dua-meaning">
+                বলুন, তিনি আল্লাহ, একক। আল্লাহ অমুখাপেক্ষী। তিনি কাউকে জন্ম দেননি এবং কেউ তাঁকে জন্ম দেয়নি। আর তাঁর সমতুল্য কেউ নেই।
+            </div>
+            <div class="dua-reference">
+                সূরা ইখলাস (১১২)
+            </div>
+        </div>
+
+        <div class="dua-section" data-category="morning">
+            <div class="dua-title">
+                <span class="time-tag">সকাল</span> সকালে দরূদ শরীফ পড়ার ফজিলত
+            </div>
+            <div class="dua-arabic">
+                اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ، كَمَا صَلَّيْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ، إِنَّكَ حَمِيدٌ مَجِيدٌ، اللَّهُمَّ بَارِكْ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ، كَمَا بَارَكْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ، إِنَّكَ حَمِيدٌ مَجِيدٌ
+            </div>
+            <div class="dua-transliteration">
+                "আল্লাহুম্মা সাল্লি আলা মুহাম্মাদিওঁ ওয়া আলা আলি মুহাম্মাদ, কামা সাল্লাইতা আলা ইব্রাহিমা ওয়া আলা আলি ইব্রাহিম, ইন্নাকা হামিদুম মাজিদ। আল্লাহুম্মা বারিক আলা মুহাম্মাদিওঁ ওয়া আলা আলি মুহাম্মাদ, কামা বারাকতা আলা ইব্রাহিমা ওয়া আলা আলি ইব্রাহিম, ইন্নাকা হামিদুম মাজিদ।"
+            </div>
+            <div class="dua-meaning">
+                হে আল্লাহ! মুহাম্মদ ও তাঁর পরিবারবর্গের উপর রহমত বর্ষণ করুন, যেমন আপনি ইব্রাহিম ও তাঁর পরিবারবর্গের উপর রহমত বর্ষণ করেছেন। নিশ্চয় আপনি প্রশংসিত, মহিমান্বিত। হে আল্লাহ! মুহাম্মদ ও তাঁর পরিবারবর্গের উপর বরকত দান করুন, যেমন আপনি ইব্রাহিম ও তাঁর পরিবারবর্গের উপর বরকত দান করেছেন। নিশ্চয় আপনি প্রশংসিত, মহিমান্বিত।
+            </div>
+            <div class="dua-reference">
+                বুখারী, হাদীস নং ৩৩৭০
+            </div>
+        </div>
+
+        <!-- Emergency Duas -->
+        <div class="dua-section" data-category="health">
+            <div class="dua-title">
+                <span class="time-tag">জরুরী</span> বিপদ-আপদে পড়ার দোয়া
+            </div>
+            <div class="dua-arabic">
+                لَا إِلَهَ إِلَّا أَنْتَ سُبْحَانَكَ إِنِّي كُنْتُ مِنَ الظَّالِمِينَ
+            </div>
+            <div class="dua-transliteration">
+                "লা ইলাহা ইল্লা আনতা সুবহানাকা ইন্নি কুনতু মিনাজ জালিমিন।"
+            </div>
+            <div class="dua-meaning">
+                তুমি ছাড়া কোনো ইলাহ নেই, তুমি পবিত্র। নিশ্চয় আমি জালিমদের অন্তর্ভুক্ত ছিলাম।
+            </div>
+            <div class="dua-reference">
+                সূরা আম্বিয়া, আয়াত ৮৭
+            </div>
+        </div>
+
+        <div class="dua-section" data-category="health">
+            <div class="dua-title">
+                <span class="time-tag">জরুরী</span> দুশ্চিন্তা ও দুঃখ থেকে মুক্তির দোয়া
+            </div>
+            <div class="dua-arabic">
+                اللَّهُمَّ إِنِّي عَبْدُكَ، وَابْنُ عَبْدِكَ، وَابْنُ أَمَتِكَ، نَاصِيَتِي بِيَدِكَ، مَاضٍ فِيَّ حُكْمُكَ، عَدْلٌ فِيَّ قَضَاؤُكَ، أَسْأَلُكَ بِكُلِّ اسْمٍ هُوَ لَكَ، سَمَّيْتَ بِهِ نَفْسَكَ، أَوْ أَنْزَلْتَهُ فِي كِتَابِكَ، أَوْ عَلَّمْتَهُ أَحَدًا مِنْ خَلْقِكَ، أَوِ اسْتَأْثَرْتَ بِهِ فِي عِلْمِ الْغَيْبِ عِنْدَكَ، أَنْ تَجْعَلَ الْقُرْآنَ رَبِيعَ قَلْبِي، وَنُورَ صَدْرِي، وَجِلَاءَ حُزْنِي، وَذَهَابَ هَمِّي
+            </div>
+            <div class="dua-transliteration">
+                "আল্লাহুম্মা ইন্নি আবদুকা, ওয়াবনু আবদিকা, ওয়াবনু আমাতিকা, নাসিয়াতি বিইয়াদিকা, মাদিন ফিয়া হুকমুকা, আদলুন ফিয়া কাদাউকা, আসআলুকা বিকুল্লিসমিন হুওয়া লাকা, সাম্মাইতা বিহি নাফসাকা, আও আনজালতাহু ফি কিতাবিকা, আও আল্লামতাহু আহাদাম মিন খালকিকা, আওইসতা'সারতা বিহি ফি ইলমিল গাইবি ইন্দাকা, আন তাজ'আলাল কুরআনা রাবিআ কালবি, ওয়া নুরা সাদরি, ওয়া জিলাআ হুজনি, ওয়া জাহাবা হাম্মি।"
+            </div>
+            <div class="dua-meaning">
+                হে আল্লাহ! আমি তোমার বান্দা, তোমার বান্দার সন্তান এবং তোমার বান্দীর সন্তান। আমার কপাল তোমার হাতে। আমার ব্যাপারে তোমার সিদ্ধান্ত কার্যকর, তোমার ফয়সালা ন্যায়সঙ্গত। আমি তোমার কাছে তোমার সেই সব নামে প্রার্থনা করছি, যা তুমি নিজের জন্য রেখেছ, অথবা তোমার কিতাবে নাযিল করেছ, অথবা তোমার কোনো সৃষ্টিকে শিখিয়েছ, অথবা গায়বের জ্ঞানে তোমার কাছে আছে, যেন তুমি কুরআনকে আমার হৃদয়ের বসন্ত, আমার বক্ষের আলো, আমার দুঃখের নিরসন এবং আমার চিন্তার অবসান করো।
+            </div>
+            <div class="dua-reference">
+                মুসনাদ আহমাদ, হাদীস নং ৩৭১২
+            </div>
+        </div>
+
+        <!-- Forgiveness Duas -->
+        <div class="dua-section" data-category="prayer">
+            <div class="dua-title">
+                <span class="time-tag">ক্ষমা</span> ক্ষমা প্রার্থনার দোয়া
+            </div>
+            <div class="dua-arabic">
+                رَبِّ اغْفِرْ لِي وَتُبْ عَلَيَّ إِنَّكَ أَنْتَ التَّوَّابُ الرَّحِيمُ
+            </div>
+            <div class="dua-transliteration">
+                "রাব্বিগফির লি ওয়া তুব আলাইয়া ইন্নাকা আনতাত তাওওয়াবুর রাহিম।"
+            </div>
+            <div class="dua-meaning">
+                হে আমার রব! আমাকে ক্ষমা করুন এবং আমার তওবা কবুল করুন। নিশ্চয় আপনি তওবা কবুলকারী, পরম দয়ালু।
+            </div>
+            <div class="dua-reference">
+                সূরা হুদ, আয়াত ৯০
+            </div>
+        </div>
+
+        <div class="dua-section" data-category="prayer">
+            <div class="dua-title">
+                <span class="time-tag">ক্ষমা</span> সাইয়িদুল ইস্তিগফার (ক্ষমার শ্রেষ্ঠ দোয়া)
+            </div>
+            <div class="dua-arabic">
+                اللَّهُمَّ أَنْتَ رَبِّي لَا إِلَهَ إِلَّا أَنْتَ، خَلَقْتَنِي وَأَنَا عَبْدُكَ، وَأَنَا عَلَى عَهْدِكَ وَوَعْدِكَ مَا اسْتَطَعْتُ، أَعُوذُ بِكَ مِنْ شَرِّ مَا صَنَعْتُ، أَبُوءُ لَكَ بِنِعْمَتِكَ عَلَيَّ، وَأَبُوءُ لَكَ بِذَنْبِي فَاغْفِرْ لِي فَإِنَّهُ لَا يَغْفِرُ الذُّنُوبَ إِلَّا أَنْتَ
+            </div>
+            <div class="dua-transliteration">
+                "আল্লাহুম্মা আনতা রাব্বি, লা ইলাহা ইল্লা আনতা, খালাকতানি ওয়া আনা আবদুকা, ওয়া আনা আলা আহদিকা ওয়া ওয়া'দিকা মাসতাতাতু, আউজু বিকা মিন শাররি মা সানাতু, আবুউ লাকা বিনিমাতিকা আলাইয়া, ওয়া আবুউ লাকা বিজাম্বি, ফাগফির লি ফাইন্নাহু লা ইয়াগফিরুজ জুনুবা ইল্লা আনতা।"
+            </div>
+            <div class="dua-meaning">
+                হে আল্লাহ! তুমিই আমার রব, তুমি ছাড়া কোনো ইলাহ নেই। তুমি আমাকে সৃষ্টি করেছ এবং আমি তোমার বান্দা। আমি যথাসাধ্য তোমার সাথে কৃত অঙ্গীকার ও ওয়াদা পূর্ণ করব। আমি আমার কৃতকর্মের অনিষ্ট থেকে তোমার আশ্রয় প্রার্থনা করছি। আমি তোমার নেয়ামতের স্বীকৃতি দিচ্ছি এবং আমার গুনাহেরও স্বীকৃতি দিচ্ছি। অতএব আমাকে ক্ষমা করো, কেননা তুমি ছাড়া কেউ গুনাহ ক্ষমা করতে পারে না।
+            </div>
+            <div class="dua-reference">
+                বুখারী, হাদীস নং ৬৩০৬
+            </div>
+        </div>
+
+        <!-- General Duas -->
+        <div class="dua-section" data-category="prayer">
+            <div class="dua-title">
+                <span class="time-tag">সাধারণ</span> কল্যাণ কামনার দোয়া
+            </div>
+            <div class="dua-arabic">
+                اللَّهُمَّ أَصْلِحْ لِي دِينِيَ الَّذِي هُوَ عِصْمَةُ أَمْرِي، وَأَصْلِحْ لِي دُنْيَايَ الَّتِي فِيهَا مَعَاشِي، وَأَصْلِحْ لِي آخِرَتِي الَّتِي فِيهَا مَعَادِي، وَاجْعَلِ الْحَيَاةَ زِيَادَةً لِي فِي كُلِّ خَيْرٍ، وَاجْعَلِ الْمَوْتَ رَاحَةً لِي مِنْ كُلِّ شَرٍّ
+            </div>
+            <div class="dua-transliteration">
+                "আল্লাহুম্মা আসলিহ লি দিনিয়াল্লাজি হুয়া ইসমাতু আমরি, ওয়া আসলিহ লি দুনইয়াইয়াতিল্লাতি ফিহা মাআশি, ওয়া আসলিহ লি আখিরাতিল্লাতি ফিহা মাআদি, ওয়াজ'আলিল হায়াতা জিয়াদাতান লি ফি কুল্লি খাইরিন, ওয়াজ'আলিল মাউতা রাহাতান লি মিন কুল্লি শাররিন।"
+            </div>
+            <div class="dua-meaning">
+                হে আল্লাহ! আমার দীনকে সংশোধন করুন, যা আমার সব বিষয়ের রক্ষাকবচ। আমার দুনিয়াকে সংশোধন করুন, যেখানে আমার জীবন-জীবিকা। আমার আখিরাতকে সংশোধন করুন, যেখানে আমার প্রত্যাবর্তন। জীবনকে আমার জন্য প্রত্যেক কল্যাণে বৃদ্ধির কারণ বানিয়ে দিন এবং মৃত্যুকে আমার জন্য সকল অকল্যাণ থেকে মুক্তির কারণ বানিয়ে দিন।
+            </div>
+            <div class="dua-reference">
+                মুসলিম, হাদীস নং ২৭২০
+            </div>
+        </div>
+
+        <div class="dua-section" data-category="prayer">
+            <div class="dua-title">
+                <span class="time-tag">সাধারণ</span> রিজিকের জন্য দোয়া
+            </div>
+            <div class="dua-arabic">
+                اللَّهُمَّ ارْزُقْنَا رِزْقًا حَلَالًا طَيِّبًا وَاسِعًا مِنْ غَيْرِ تَعَبٍ وَلَا مَشَقَّةٍ وَلَا ضَيْرٍ وَلَا نَصَبٍ، وَارْزُقْنَا مِنْ فَضْلِكَ الْوَاسِعِ رِزْقًا نَشْكُرُكَ عَلَيْهِ
+            </div>
+            <div class="dua-transliteration">
+                "আল্লাহুম্মার জুকনা রিজকান হালালান তাইয়িবান ওয়াসিয়াম মিন গাইরি তা'বিওঁ ওয়া লা মাশাক্কাতিওঁ ওয়া লা দাইরিওঁ ওয়া লা নাসাবিন, ওয়ারজুকনা মিন ফাদলিকাল ওয়াসিয়ি রিজকান নাশকুরুকা আলাইহি।"
+            </div>
+            <div class="dua-meaning">
+                হে আল্লাহ! আমাদের হালাল, পবিত্র ও প্রশস্ত রিজিক দান করুন, কষ্ট, ক্লান্তি, ক্ষতি ও পরিশ্রম ছাড়াই। আর তোমার প্রশস্ত অনুগ্রহ থেকে আমাদের এমন রিজিক দান করুন যার জন্য আমরা তোমার শুকরিয়া আদায় করি।
+            </div>
+            <div class="dua-reference">
+                ইবনে মাজাহ, হাদীস নং ৩৮৩৬
+            </div>
+        </div>
+
+        <div class="dua-section" data-category="prayer">
+            <div class="dua-title">
+                <span class="time-tag">সাধারণ</span> বিপদ থেকে আশ্রয় চাওয়ার দোয়া
+            </div>
+            <div class="dua-arabic">
+                اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْهَمِّ وَالْحَزَنِ، وَالْعَجْزِ وَالْكَسَلِ، وَالْبُخْلِ وَالْجُبْنِ، وَضَلَعِ الدَّيْنِ وَغَلَبَةِ الرِّجَالِ
+            </div>
+            <div class="dua-transliteration">
+                "আল্লাহুম্মা ইন্নি আউজু বিকা মিনাল হাম্মি ওয়াল হাজানি, ওয়াল আজজি ওয়াল কাসালি, ওয়াল বুখলি ওয়াল জুবনি, ওয়া দালাআদ দাইনি ওয়া গালাবাতির রিজাল।"
+            </div>
+            <div class="dua-meaning">
+                হে আল্লাহ! আমি তোমার কাছে দুশ্চিন্তা ও দুঃখ থেকে, অক্ষমতা ও অলসতা থেকে, কৃপণতা ও ভীরুতা থেকে, ঋণের বোঝা ও মানুষের দমন-পীড়ন থেকে আশ্রয় চাই।
+            </div>
+            <div class="dua-reference">
+                বুখারী, হাদীস নং ৬৩৬৩
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        © ২০২৪ ইসলামিক দোয়া | 
+        <a href="https://bengeltigerwd.github.io/AL-HIDAYA-WEB-STUDIO-BD/" class="footer-link" target="_blank">
+            AL-HIDAYA WEB STUDIO BANGLADESH
+        </a>
+    </footer>
+
+    <script>
+        // Search duas
+        function searchDuas() {
+            const input = document.getElementById('searchInput').value.toLowerCase();
+            const duas = document.querySelectorAll('.dua-section');
+            
+            duas.forEach(dua => {
+                const text = dua.textContent.toLowerCase();
+                if (text.includes(input)) {
+                    dua.style.display = 'block';
+                } else {
+                    dua.style.display = 'none';
+                }
+            });
+        }
+
+        // Filter duas by category
+        function filterDuas(category) {
+            const duas = document.querySelectorAll('.dua-section');
+            const buttons = document.querySelectorAll('.category-btn');
+            
+            buttons.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.getAttribute('onclick').includes(category)) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            duas.forEach(dua => {
+                if (category === 'all' || dua.getAttribute('data-category') === category) {
+                    dua.style.display = 'block';
+                } else {
+                    dua.style.display = 'none';
+                }
+            });
+        }
+
+        // Initialize search on Enter key press
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                searchDuas();
+            }
+        });
+
+        // Show all duas initially
+        window.onload = function() {
+            filterDuas('all');
+        };
+    </script>
+</body>
+</html>
