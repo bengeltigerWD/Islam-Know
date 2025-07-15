@@ -5,116 +5,271 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ইসলামিক প্রশ্নোত্তর</title>
     <style>
+        :root {
+            --primary-color: #004d40;
+            --secondary-color: #00796b;
+            --accent-color: #388e3c;
+            --light-bg: #f0f4f8;
+            --text-color: #333;
+            --white: #ffffff;
+        }
+        
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: 'Kalpurush', 'Arial', sans-serif;
             margin: 0;
             padding: 0;
-            background: linear-gradient(to bottom, #f0f4f8, #e6f7f2);
-            color: #333;
+            background: var(--light-bg);
+            color: var(--text-color);
+            line-height: 1.6;
         }
+        
         header {
-            background: #004d40;
-            color: white;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--white);
             text-align: center;
-            padding: 20px 0;
+            padding: 25px 0;
             font-size: 1.8em;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
         }
+        
         .btn-container {
             display: flex;
             justify-content: space-between;
-            padding: 10px;
-            background: #00796b;
+            padding: 12px 20px;
+            background: var(--secondary-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
+        
         .btn-container a {
             text-decoration: none;
-            color: white;
-            background: #388e3c;
-            padding: 10px 15px;
-            border-radius: 5px;
+            color: var(--white);
+            background: var(--accent-color);
+            padding: 10px 20px;
+            border-radius: 25px;
             font-size: 1em;
             font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
+        
         .btn-container a:hover {
             background: #2e7d32;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
-        .content {
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
             padding: 20px;
         }
-        .question {
-            margin-bottom: 20px;
-        }
-        .question strong {
-            color: #004d40;
-        }
-        .ask-question {
+        
+        .search-section {
             text-align: center;
-            margin-top: 30px;
+            margin: 30px 0;
         }
-        .ask-question button {
-            background: #004d40;
-            color: white;
+        
+        .search-box {
+            position: relative;
+            display: inline-block;
+            width: 80%;
+            max-width: 600px;
+        }
+        
+        .search-box input[type="text"] {
+            width: 100%;
+            padding: 12px 20px;
+            font-size: 1.1em;
+            border: 2px solid #ddd;
+            border-radius: 30px;
+            outline: none;
+            transition: all 0.3s;
+            font-family: 'Kalpurush', sans-serif;
+        }
+        
+        .search-box input[type="text"]:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 10px rgba(56, 142, 60, 0.2);
+        }
+        
+        .search-box button {
+            position: absolute;
+            right: 5px;
+            top: 5px;
+            background: var(--accent-color);
+            color: var(--white);
             border: none;
-            padding: 10px 20px;
+            padding: 7px 15px;
             font-size: 1em;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .search-box button:hover {
+            background: #2e7d32;
+        }
+        
+        .ask-question-btn {
+            display: block;
+            margin: 0 auto 30px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--white);
+            border: none;
+            padding: 12px 30px;
+            font-size: 1.1em;
             font-weight: bold;
             cursor: pointer;
+            border-radius: 30px;
+            transition: all 0.3s;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .ask-question-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .question-container {
+            background: var(--white);
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+        }
+        
+        .question-container:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .question-title {
+            color: var(--primary-color);
+            font-size: 1.3em;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        
+        .question-answer {
+            color: var(--text-color);
+            font-size: 1.1em;
+            line-height: 1.7;
+        }
+        
+        .note-box {
+            background: #e8f5e9;
+            border-left: 4px solid var(--accent-color);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        #question-form {
+            display: none;
+            background: var(--white);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-top: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
             border-radius: 5px;
-        }
-        .ask-question button:hover {
-            background: #388e3c;
-        }
-        #like-note {
-            text-align: center;
-            margin-top: 10px;
             font-size: 1em;
-            color: #004d40;
+            font-family: 'Kalpurush', sans-serif;
         }
+        
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        .submit-btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--white);
+            border: none;
+            padding: 12px 30px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 30px;
+            transition: all 0.3s;
+        }
+        
+        .submit-btn:hover {
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            transform: translateY(-2px);
+        }
+        
         footer {
-            background: #004d40;
-            color: white;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--white);
             text-align: center;
-            padding: 10px 0;
-            font-size: 0.9em;
+            padding: 20px 0;
+            margin-top: 50px;
         }
-        footer a {
+        
+        .footer-link {
             color: #ffcc00;
             text-decoration: none;
+            transition: all 0.3s;
         }
-        footer a:hover {
+        
+        .footer-link:hover {
             text-decoration: underline;
+            color: #ffd700;
         }
-        .search-section {
+        
+        .category-filter {
             text-align: center;
             margin: 20px 0;
         }
-        .search-section input[type="text"] {
-            width: 60%;
-            padding: 10px;
-            font-size: 1em;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        .search-section button {
-            background: #004d40;
-            color: white;
+        
+        .category-btn {
+            background: #e0e0e0;
+            color: var(--text-color);
             border: none;
-            padding: 10px 20px;
-            font-size: 1em;
-            font-weight: bold;
+            padding: 8px 15px;
+            margin: 5px;
+            border-radius: 20px;
             cursor: pointer;
-            border-radius: 5px;
-            margin-left: 10px;
+            transition: all 0.3s;
         }
-        .search-section button:hover {
-            background: #388e3c;
+        
+        .category-btn.active, .category-btn:hover {
+            background: var(--accent-color);
+            color: var(--white);
         }
-        .top-section {
-            text-align: center;
-            margin-top: 20px;
-        }
+        
         @media (max-width: 768px) {
-            .search-section input[type="text"] {
-                width: 80%;
+            .container {
+                padding: 15px;
+            }
+            
+            .search-box {
+                width: 90%;
+            }
+            
+            .question-container {
+                padding: 15px;
             }
         }
     </style>
@@ -125,67 +280,253 @@
     </header>
 
     <div class="btn-container">
-        <a href="javascript:history.back()">Back</a>
-        <a href="index.html">Home</a>
+        <a href="javascript:history.back()">পিছনে</a>
+        <a href="index.html">হোম</a>
     </div>
 
-    <div class="top-section">
+    <div class="container">
         <div class="search-section">
-            <input type="text" placeholder="আপনার প্রশ্ন লিখুন...">
-            <button>Search</button>
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="প্রশ্ন খুঁজুন...">
+                <button onclick="searchQuestions()"><i class="fas fa-search"></i> খুঁজুন</button>
+            </div>
         </div>
 
-        <div class="ask-question">
-            <button onclick="openQuestionForm()">প্রশ্ন করুন</button>
-        </div>
-    </div>
-
-    <div class="content">
-        <div id="like-note">
-            আপনার প্রশ্ন আমাদের কাছে অত্যন্ত গুরুত্বপূর্ণ। আপনি প্রশ্ন করলে এটি এই পৃষ্ঠায় যোগ করা হবে।
-        </div>
-
-        <div class="question">
-            <strong>প্রশ্ন ১:</strong> নামাজ কেন গুরুত্বপূর্ণ?
-            <p>উত্তর: নামাজ মুসলিম জীবনের একটি মূল ভিত্তি। এটি আল্লাহর সঙ্গে সংযোগ স্থাপন এবং আত্মিক শান্তি লাভের উপায়।</p>
-        </div>
-        <div class="question">
-            <strong>প্রশ্ন ২:</strong> রোজা রাখা কেন জরুরি?
-            <p>উত্তর: রোজা মুসলমানদের জন্য একটি বাধ্যতামূলক ইবাদত যা আমাদের ধৈর্য ও আত্মসংযম শেখায়।</p>
-        </div>
-        <div class="question">
-            <strong>প্রশ্ন ৩:</strong> জাকাতের গুরুত্ব কী?
-            <p>উত্তর: জাকাত হলো সম্পদের পরিশুদ্ধি এবং দরিদ্রদের সহায়তা করার একটি উপায়।</p>
-        </div>
-        <div class="question">
-            <strong>প্রশ্ন ৪:</strong> হজের উদ্দেশ্য কী?
-            <p>উত্তর: হজ হলো ইসলামের একটি স্তম্ভ যা মুসলমানদের ঐক্য ও আল্লাহর প্রতি তাদের আনুগত্য প্রকাশ করে।</p>
+        <div class="category-filter">
+            <button class="category-btn active" onclick="filterQuestions('all')">সব</button>
+            <button class="category-btn" onclick="filterQuestions('namaz')">নামাজ</button>
+            <button class="category-btn" onclick="filterQuestions('roja')">রোজা</button>
+            <button class="category-btn" onclick="filterQuestions('zakah')">যাকাত</button>
+            <button class="category-btn" onclick="filterQuestions('hajj')">হজ্জ</button>
+            <button class="category-btn" onclick="filterQuestions('aqeedah')">আকীদা</button>
         </div>
 
-        <div id="question-form" style="display: none; text-align: center; margin-top: 20px;">
-            <form action="mailto:ajmirahemed75@gmail.com" method="post" enctype="text/plain">
-                <label for="name">নাম:</label><br>
-                <input type="text" id="name" name="name" required><br><br>
-                <label for="email">ইমেইল:</label><br>
-                <input type="email" id="email" name="email" required><br><br>
-                <label for="question">আপনার প্রশ্ন:</label><br>
-                <textarea id="question" name="question" rows="4" required></textarea><br><br>
-                <button type="submit">জমা দিন</button>
+        <button class="ask-question-btn" onclick="openQuestionForm()">প্রশ্ন করুন</button>
+
+        <div class="note-box">
+            আপনার প্রশ্ন আমাদের কাছে অত্যন্ত গুরুত্বপূর্ণ। আপনি প্রশ্ন করলে আমাদের আলেমগণ যতদ্রুত সম্ভব উত্তর প্রদান করবেন।
+        </div>
+
+        <!-- Question 1 -->
+        <div class="question-container" data-category="namaz">
+            <div class="question-title">প্রশ্ন: নামাজ কেন গুরুত্বপূর্ণ?</div>
+            <div class="question-answer">
+                উত্তর: নামাজ ইসলামের দ্বিতীয় স্তম্ভ এবং আল্লাহর সাথে বান্দার সরাসরি সংযোগের মাধ্যম। 
+                রাসূলুল্লাহ (সা.) বলেছেন, "কিয়ামতের দিন বান্দার প্রথম হিসাব নামাজেরই হবে।" (তিরমিযী)
+                নামাজ মানুষকে অশ্লীল ও মন্দ কাজ থেকে বিরত রাখে (সূরা আনকাবুত: ৪৫) এবং 
+                এটি মুমিনের মিরাজস্বরূপ।
+            </div>
+        </div>
+
+        <!-- Question 2 -->
+        <div class="question-container" data-category="roja">
+            <div class="question-title">প্রশ্ন: রোজা রাখা কেন ফরজ?</div>
+            <div class="question-answer">
+                উত্তর: রোজা ইসলামের তৃতীয় স্তম্ভ এবং আল্লাহ তাআলা বলেন, 
+                "হে ঈমানদারগণ! তোমাদের উপর রোজা ফরজ করা হয়েছে, যেমন ফরজ করা হয়েছিল তোমাদের পূর্ববর্তীদের উপর, 
+                যাতে তোমরা তাকওয়া অর্জন করতে পার।" (সূরা বাকারা: ১৮৩)
+                রোজা শুধু ক্ষুধা-তৃষ্ণার যন্ত্রণাই নয়, এটি আত্মশুদ্ধি ও আল্লাহভীতির প্রশিক্ষণ। 
+                রাসূল (সা.) বলেছেন, "রোজা ঢালস্বরূপ।" (বুখারী)
+            </div>
+        </div>
+
+        <!-- Question 3 -->
+        <div class="question-container" data-category="zakah">
+            <div class="question-title">প্রশ্ন: জাকাতের হিকমত কী?</div>
+            <div class="question-answer">
+                উত্তর: জাকাত ইসলামের চতুর্থ স্তম্ভ এবং সম্পদের পরিশুদ্ধি। আল্লাহ বলেন, 
+                "তাদের সম্পদ থেকে সদকাহ (জাকাত) গ্রহণ কর, যাতে তুমি তা দ্বারা তাদের পবিত্র ও পরিশুদ্ধ করতে পার।" (সূরা তাওবা: ১০৩)
+                জাকাত সমাজের অর্থনৈতিক ভারসাম্য রক্ষা করে, দারিদ্র্য দূর করে এবং সম্পদে বরকত আনে। 
+                এটি মুসলিম সমাজের সামাজিক নিরাপত্তা ব্যবস্থার মূলভিত্তি।
+            </div>
+        </div>
+
+        <!-- Question 4 -->
+        <div class="question-container" data-category="hajj">
+            <div class="question-title">প্রশ্ন: হজ্জ ফরজ হওয়ার শর্ত কী?</div>
+            <div class="question-answer">
+                উত্তর: হজ্জ ইসলামের পঞ্চম স্তম্ভ। এর ফরজ হওয়ার শর্তগুলো হলো:
+                ১. মুসলমান হওয়া
+                ২. বালিগ হওয়া
+                ৩. সুস্থ মস্তিষ্কের অধিকারী হওয়া
+                ৪. শারীরিক ও আর্থিক সামর্থ্য থাকা
+                ৫. পথ নিরাপদ হওয়া
+                ৬. মহিলাদের জন্য স্বামী বা মাহরাম পুরুষ সঙ্গী থাকা
+                
+                আল্লাহ বলেন, "এবং মানুষের উপর আল্লাহর জন্য বাইতুল্লাহর হজ্জ করা ফরজ, 
+                যারা সেখানে যাওয়ার সামর্থ্য রাখে।" (সূরা আলে ইমরান: ৯৭)
+            </div>
+        </div>
+
+        <!-- Question 5 -->
+        <div class="question-container" data-category="aqeedah">
+            <div class="question-title">প্রশ্ন: তাওহীদ কত প্রকার ও কী কী?</div>
+            <div class="question-answer">
+                উত্তর: তাওহীদ তিন প্রকার:
+                ১. তাওহীদুর রুবুবিয়্যাহ: আল্লাহর একত্ববাদ - সৃষ্টি, রাজত্ব ও পরিচালনায় আল্লাহকে এক ও অদ্বিতীয় মনে করা।
+                ২. তাওহীদুল উলুহিয়্যাহ/ইবাদাহ: ইবাদাত ও উপাসনায় আল্লাহকে এক মনে করা।
+                ৩. তাওহীদুল আসমা ওয়াস সিফাত: আল্লাহর নাম ও গুণাবলীতে তাঁকে এক মনে করা।
+                
+                আল্লাহ বলেন, "তোমার ইলাহ একক ইলাহ, তিনি ছাড়া কোনো ইলাহ নেই, তিনি দয়াময়, পরম দয়ালু।" (সূরা বাকারা: ১৬৩)
+            </div>
+        </div>
+
+        <!-- Question 6 -->
+        <div class="question-container" data-category="namaz">
+            <div class="question-title">প্রশ্ন: নামাজের সময় নির্ধারণের নিয়ম কী?</div>
+            <div class="question-answer">
+                উত্তর: নামাজের সময়গুলো কুরআন ও হাদীস দ্বারা নির্ধারিত:
+                ১. ফজর: সুবহে সাদিক থেকে সূর্যোদয় পর্যন্ত
+                ২. জোহর: সূর্য পশ্চিমাকাশে হেলে যাওয়া থেকে প্রতিটি বস্তুর ছায়া তার সমান হওয়া পর্যন্ত
+                ৩. আসর: প্রতিটি বস্তুর ছায়া তার দ্বিগুণ হওয়া থেকে সূর্যাস্ত পর্যন্ত
+                ৪. মাগরিব: সূর্যাস্ত থেকে লাল আভা消失 (শাফাক) পর্যন্ত
+                ৫. ইশা: শাফাক消失 থেকে সুবহে সাদিক পর্যন্ত
+                
+                রাসূল (সা.) বলেছেন, "নামাজের সময় ফেরেশতাদের সাক্ষ্যে নির্ধারিত হয়েছে।" (বুখারী)
+            </div>
+        </div>
+
+        <!-- Question 7 -->
+        <div class="question-container" data-category="aqeedah">
+            <div class="question-title">প্রশ্ন: ঈমানের রুকন কয়টি ও কী কী?</div>
+            <div class="question-answer">
+                উত্তর: ঈমানের রুকন ছয়টি (ঈমানে মুফাসসাল):
+                ১. আল্লাহর উপর ঈমান আনা
+                ২. ফেরেশতাদের উপর ঈমান আনা
+                ৩. আসমানী কিতাবসমূহের উপর ঈমান আনা
+                ৪. রাসূলগণের উপর ঈমান আনা
+                ৫. আখিরাতের উপর ঈমান আনা
+                ৬. তাকদীরের ভালো-মন্দ আল্লাহর পক্ষ থেকে হওয়ার উপর ঈমান আনা
+                
+                রাসূল (সা.) বলেছেন, "ঈমান হলো- তুমি আল্লাহ, তাঁর ফেরেশতা, তাঁর কিতাবসমূহ, 
+                তাঁর রাসূলগণ ও আখিরাতের উপর ঈমান আনবে এবং তাকদীরের ভালো-মন্দের উপর ঈমান আনবে।" (মুসলিম)
+            </div>
+        </div>
+
+        <!-- Question 8 -->
+        <div class="question-container" data-category="roja">
+            <div class="question-title">প্রশ্ন: রমজান মাসের ফজিলত কী?</div>
+            <div class="question-answer">
+                উত্তর: রমজান মাসের ফজিলত অপরিসীম:
+                ১. এ মাসে কুরআন নাযিল হয়েছে (সূরা বাকারা: ১৮৫)
+                ২. এ মাসে লাইলাতুল কদর রয়েছে যা হাজার মাস অপেক্ষা উত্তম (সূরা কদর: ৩)
+                ৩. এ মাসে জান্নারের দরজা খুলে দেওয়া হয় ও জাহান্নামের দরজা বন্ধ করা হয় (বুখারী)
+                ৪. শয়তানকে শৃঙ্খলিত করা হয় (বুখারী)
+                ৫. এ মাসে একটি ফরজ ইবাদত ৭০টি ফরজ ইবাদতের সমান সওয়াব লাভ হয় (বায়হাকী)
+                ৬. এ মাসে আল্লাহ অসংখ্য বান্দাকে জাহান্নাম থেকে মুক্তি দেন (তিরমিযী)
+            </div>
+        </div>
+
+        <!-- Question Form -->
+        <div id="question-form">
+            <h2 style="text-align: center; color: var(--primary-color); margin-bottom: 20px;">আপনার প্রশ্ন জমা দিন</h2>
+            <form id="qForm" onsubmit="submitQuestion(event)">
+                <div class="form-group">
+                    <label for="name">আপনার নাম:</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">ইমেইল (ঐচ্ছিক):</label>
+                    <input type="email" id="email" name="email">
+                </div>
+                
+                <div class="form-group">
+                    <label for="category">বিষয়:</label>
+                    <select id="category" name="category" class="form-group input" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px;">
+                        <option value="namaz">নামাজ</option>
+                        <option value="roja">রোজা</option>
+                        <option value="zakah">যাকাত</option>
+                        <option value="hajj">হজ্জ</option>
+                        <option value="aqeedah">আকীদা</option>
+                        <option value="other">অন্যান্য</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="question">আপনার প্রশ্ন:</label>
+                    <textarea id="question" name="question" required></textarea>
+                </div>
+                
+                <div style="text-align: center;">
+                    <button type="submit" class="submit-btn">প্রশ্ন জমা দিন</button>
+                </div>
             </form>
         </div>
-
-        <script>
-            function openQuestionForm() {
-                document.getElementById('question-form').style.display = 'block';
-            }
-        </script>
     </div>
 
     <footer>
-        © ২০২৪ ইসলামিক সাইট | 
-        <a href=" https://bengeltigerwd.github.io/AL-HIDAYA-WEB-STUDIO-BD/" target="_blank">
-          AL-HIDAYA WEB STUDIO BANGLADESH
+        © ২০২৪ ইসলামিক প্রশ্নোত্তর | 
+        <a href="https://bengeltigerwd.github.io/AL-HIDAYA-WEB-STUDIO-BD/" class="footer-link" target="_blank">
+            AL-HIDAYA WEB STUDIO BANGLADESH
         </a>
     </footer>
+
+    <script>
+        // Open question form
+        function openQuestionForm() {
+            document.getElementById('question-form').style.display = 'block';
+            window.scrollTo({
+                top: document.getElementById('question-form').offsetTop - 20,
+                behavior: 'smooth'
+            });
+        }
+
+        // Search questions
+        function searchQuestions() {
+            const input = document.getElementById('searchInput').value.toLowerCase();
+            const questions = document.querySelectorAll('.question-container');
+            
+            questions.forEach(question => {
+                const text = question.textContent.toLowerCase();
+                if (text.includes(input)) {
+                    question.style.display = 'block';
+                } else {
+                    question.style.display = 'none';
+                }
+            });
+        }
+
+        // Filter questions by category
+        function filterQuestions(category) {
+            const questions = document.querySelectorAll('.question-container');
+            const buttons = document.querySelectorAll('.category-btn');
+            
+            buttons.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.getAttribute('onclick').includes(category)) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            questions.forEach(question => {
+                if (category === 'all' || question.getAttribute('data-category') === category) {
+                    question.style.display = 'block';
+                } else {
+                    question.style.display = 'none';
+                }
+            });
+        }
+
+        // Submit question form
+        function submitQuestion(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const question = document.getElementById('question').value;
+            
+            alert(`ধন্যবাদ ${name}, আপনার প্রশ্ন সফলভাবে জমা হয়েছে। আমাদের আলেমগণ শীঘ্রই উত্তর প্রদান করবেন।`);
+            
+            document.getElementById('qForm').reset();
+            document.getElementById('question-form').style.display = 'none';
+        }
+
+        // Initialize search on Enter key press
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                searchQuestions();
+            }
+        });
+    </script>
 </body>
 </html>
